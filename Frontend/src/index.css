@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: transparent !important;
+  transition: color 0.5s ease-in-out;
+}
+
+.swipper:hover .swiper-button-prev,
+.swiper:hover .swiper-button-next {
+  color: #1c1c1c !important;
+}
+
+.swiper-pagination-bullet {
+  background: red !important;
+  opacity: 100 !important;
+  height: 10px !important;
+  width: 10px !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: transparent !important;
+    border: 1px solid red !important;
+}
