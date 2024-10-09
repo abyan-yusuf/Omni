@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Register from "./Pages/Register";
 import NotFound from "./Pages/NotFound";
-import AdminRoute from "./Routes/adminRoute";
+import AdminRoute from "./Routes/AdminRoute";
 import AdminDashboard from "./Pages/AdminDashboard";
 import Categories from "./Pages/Categories";
 import Slides from "./Pages/Slides";
