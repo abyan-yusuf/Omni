@@ -21,7 +21,7 @@ export const createSubCategory = async (req, res) => {
         if (!parentCat) {
             return res.status(404).send({ message: "Parent Category is required" })
         }
-        const existingSubCategory = await SubCategory.findOne({ name })
+        const existingSubCategory = await SubCategory.findOne({ name, parentCat })
         if (existingSubCategory) {
             return res.status(500).send({ message: "SubCategory already exists" })
         }
@@ -47,9 +47,8 @@ export const updateSubCategory = async (req, res) => {
         if (!name) {
             return res.status(404).send({ message: "Please enter a name" })
         }
-        const existingSubCategory = await SubCategory.findOne({ name })
-        if (existingSubCategory) {
-            return res.status(500).send({ message: "SubCategory already exists" })
+        if (!parentCat) {
+            return res.status(404).send({ message: "Please enter a parent category" })
         }
         const updatedSubCategory = await SubCategory.findByIdAndUpdate(
             subid,
@@ -95,6 +94,9 @@ export const getImageById = async (req, res) => {
     try {
         const { subid } = req.params;
         const productImage = await SubCategory.findById(subid).select("image")
+        if (!productImage) {
+            return res.status(500).send({ message: "SubCategory not found" })
+        }
         if (productImage.image.data) {
             res.set("Content-Type", productImage.image.contentType)
             return res.status(200).send(productImage.image.data)

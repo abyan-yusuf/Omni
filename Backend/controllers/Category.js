@@ -1,4 +1,5 @@
 import Category from "../models/Category.js";
+import SubCategory from "../models/SubCategory.js"
 import fs from "fs"
 
 export const createCategory = async (req, res) => {
@@ -59,14 +60,15 @@ export const updateCategory = async (req, res) => {
     if (!name) {
       return res.status(404).send({ message: "Please enter a name" });
     }
+    const existingCategory = await Category.findOne({ name });
     const updatedCategory = await Category.findByIdAndUpdate(
       catid,
-      { ...req.fields },
+      { name: name?name:existingCategory.name },
       { new: true }
     );
     if (image) {
-      updatedCategory.image.data = fs.readFileSync(image.path);
-      updatedCategory.image.contentType = image.type;
+      updatedCategory.image.data = image? fs.readFileSync(image.path):existingCategory.image.data;
+      updatedCategory.image.contentType = image?image.type:existingCategory.image.contentType;
     }
     await updatedCategory.save();
     return res
@@ -82,6 +84,7 @@ export const deleteCategory = async (req, res) => {
   try {
     const { catid } = req.params;
     const deleteCategory = await Category.findByIdAndDelete(catid)
+    await SubCategory.deleteMany({ parentCat: catid })
     res.status(200).send({message: "Category deleted", category: deleteCategory})
   } catch (error) {
     console.error(error);
