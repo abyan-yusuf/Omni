@@ -36,6 +36,19 @@ const AdminMenu = () => {
         </li>
         <li className="border-b-2">
           <NavLink
+            to={"/dashboard/manage-sub-category"}
+            className={({ isActive }) =>
+              [
+                isActive ? "bg-gray-200" : "",
+                "rounded-none transition-all active:text-[black!important] active:bg-[#e5e7eb!important] hover:outline-0",
+              ].join(" ")
+            }
+          >
+            Sub Categories
+          </NavLink>
+        </li>
+        <li className="border-b-2">
+          <NavLink
             to={"/dashboard/slides"}
             className={({ isActive }) =>
               [

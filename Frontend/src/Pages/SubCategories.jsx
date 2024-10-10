@@ -4,35 +4,40 @@ import AdminMenu from "../Components/AdminMenu";
 import axios from "axios";
 import CategoryForm from "../Components/CategoryForm";
 import { Modal } from "antd";
+import useCategories from "../Hooks/useCategories";
 import { useAuthContext } from "../Apis/authContext";
 import { toast } from "react-toastify";
+import SubCategoryForm from "../Components/SubCategoryForm";
 
-const Categories = () => {
-  const [categories, setCategories] = useState([]);
+const SubCategories = () => {
+  const [subCategories, setSubCategories] = useState([]);
   const [auth] = useAuthContext();
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [updatedImage, setUpdatedImage] = useState("");
-  const [selected, setSelected] = useState(" ");
+  const [selected, setSelected] = useState({});
   const [updatedName, setUpdatedName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [addCategory, setAddCategory] = useState(false);
+  const [addSubCategory, setAddSubCategory] = useState(false);
+  const [parentCat, setParentCat] = useState("");
+  const [updatedParentCat, setUpdatedParentCat] = useState("");
 
-  const getAllCategories = async () => {
+  const getAllSubCategories = async () => {
     const { data } = await axios.get(
-      "https://omni-yxd5.onrender.com/api/v1/categories/all-categories"
+      "https://omni-yxd5.onrender.com/api/v1/sub-categories/all-sub-categories"
     );
-    setCategories(data);
+    console.log(data);
+    setSubCategories(data);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const categoryInfo = new FormData();
       categoryInfo.append("name", name);
       categoryInfo.append("image", image);
+      categoryInfo.append("parentCat", parentCat);
       const { data } = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/categories/create",
+        "https://omni-yxd5.onrender.com/api/v1/sub-categories/create",
         categoryInfo,
         { headers: { Authorization: auth?.token } }
       );
@@ -40,8 +45,10 @@ const Categories = () => {
       if (data) {
         toast.success("Category created successfully");
         setName("");
-        setAddCategory(false);
-        getAllCategories();
+        setImage("");
+        setParentCat("");
+        setAddSubCategory(false);
+        getAllSubCategories();
       }
     } catch (error) {
       console.log(error);
@@ -58,16 +65,14 @@ const Categories = () => {
       if (answer !== "Yes") {
         return;
       }
-      if (selected.length > 2) {
-        const { data } = await axios.delete(
-          `https://omni-yxd5.onrender.com/api/v1/categories/delete/${selected}`,
-          { headers: { Authorization: auth.token } }
-        );
-        if (data) {
-          toast.success("Category deleted successfully");
-          getAllCategories();
-          setSelected({});
-        }
+      const { data } = await axios.delete(
+        `https://omni-yxd5.onrender.com/api/v1/sub-categories/delete/${selected}`,
+        { headers: { Authorization: auth.token } }
+      );
+      if (data) {
+        toast.success("Category deleted successfully");
+        getAllSubCategories();
+        setSelected({});
       }
     } catch (error) {
       console.log(error);
@@ -76,17 +81,18 @@ const Categories = () => {
   };
 
   const handleCancel = () => {
-    setAddCategory(false);
+    setAddSubCategory(false);
   };
 
   const handleUpdate = async (e) => {
-    e.preventDefault();
-    const categoryInfo = new FormData();
-    categoryInfo.append("name", updatedName);
-    categoryInfo.append("image", updatedImage);
     try {
+      e.preventDefault();
+      const categoryInfo = new FormData();
+      categoryInfo.append("name", updatedName);
+      categoryInfo.append("image", updatedImage);
+      categoryInfo.append("parentCat", updatedParentCat);
       const { data } = await axios.put(
-        `https://omni-yxd5.onrender.com/api/v1/categories/update/${selected._id}`,
+        `https://omni-yxd5.onrender.com/api/v1/sub-categories/update/${selected}`,
         categoryInfo,
         { headers: { Authorization: auth.token } }
       );
@@ -94,16 +100,15 @@ const Categories = () => {
         toast.success("Category updated successfully");
         setUpdatedName("");
         setIsModalOpen(false);
-        getAllCategories();
+        getAllSubCategories();
       }
-      console.log(data);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
     }
   };
   useEffect(() => {
-    getAllCategories();
+    getAllSubCategories();
   }, []);
   return (
     <Layout>
@@ -112,35 +117,39 @@ const Categories = () => {
           <AdminMenu />
         </div>
         <div className="basis-3/4 ml-2">
-          <h2 className="text-3xl text-center mt-5">Manage Categories</h2>
+          <h2 className="text-3xl text-center mt-5 font-[forum] font-bold">
+            Manage Sub Categories
+          </h2>
           <div className="overflow-x-auto mt-10">
-            <table className="table mb-5">
+            <table className="table mb-5 font-[roboto]">
               <thead>
                 <tr>
                   <th></th>
                   <th>Image</th>
                   <th>Name</th>
+                  <th>Root Category</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {categories.map((category, i) => (
-                  <tr key={category._id}>
+                {subCategories.map((subCategory, i) => (
+                  <tr key={subCategory._id}>
                     <th>{i + 1}</th>
                     <td>
                       <img
-                        src={`https://omni-yxd5.onrender.com/api/v1/categories/image/${category._id}`}
+                        src={`https://omni-yxd5.onrender.com/api/v1/sub-categories/image/${subCategory._id}`}
                         className="h-20 w-auto"
                       />
                     </td>
-                    <td>{category.name}</td>
+                    <td>{subCategory.name}</td>
+                    <td>{subCategory.parentCat.name}</td>
                     <td className="space-x-2">
                       <button
                         className="btn btn-primary"
                         onClick={() => {
-                          setSelected(category);
+                          setSelected(subCategory._id);
                           setIsModalOpen(true);
-                          setUpdatedName(category?.name);
+                          setUpdatedName(subCategory?.name);
                         }}
                       >
                         Edit
@@ -148,7 +157,8 @@ const Categories = () => {
                       <button
                         className="btn btn-error text-white"
                         onClick={() => {
-                          setSelected(category._id);
+                          setSelected(subCategory._id);
+                          console.log(subCategory._id);
                           handleDelete();
                         }}
                       >
@@ -160,14 +170,16 @@ const Categories = () => {
               </tbody>
             </table>
           </div>
-          {addCategory ? (
-            <CategoryForm
+          {addSubCategory ? (
+            <SubCategoryForm
               handleSubmit={handleSubmit}
               handleCancel={handleCancel}
               value={name}
               image={image}
               className={"mb-5"}
               setImage={setImage}
+              parent={parentCat}
+              setParent={setParentCat}
               setValue={setName}
               cancelButton={true}
             />
@@ -175,7 +187,7 @@ const Categories = () => {
             <button
               className="btn btn-primary"
               onClick={() => {
-                setAddCategory(true);
+                setAddSubCategory(true);
               }}
             >
               Add category
@@ -186,13 +198,15 @@ const Categories = () => {
             open={isModalOpen}
             footer={null}
           >
-            <CategoryForm
+            <SubCategoryForm
               value={updatedName}
               setValue={setUpdatedName}
               image={updatedImage}
               setImage={setUpdatedImage}
+              parent={updatedParentCat}
+              setParent={setUpdatedParentCat}
               handleSubmit={handleUpdate}
-              id={selected?._id}
+              id={selected}
             />
           </Modal>
         </div>
@@ -201,4 +215,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default SubCategories;

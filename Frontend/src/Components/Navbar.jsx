@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Apis/authContext";
 
@@ -27,8 +27,8 @@ const Navbar = () => {
     <nav
       className={
         navbar
-          ? "p-2 bg-base-100 shadow-sm z-[100] animate-fade-in fixed"
-          : "p-2 shadow-sm z-[100] bg-base-100"
+          ? "p-4 bg-base-100 shadow-sm z-[100] animate-fade-in fixed "
+          : "p-2 shadow-sm z-[100] bg-base-100  "
       }
     >
       <div className="navbar bg-base-100">

@@ -10,6 +10,7 @@ import AdminRoute from "./Routes/AdminRoute";
 import AdminDashboard from "./Pages/AdminDashboard";
 import Categories from "./Pages/Categories";
 import Slides from "./Pages/Slides";
+import SubCategories from "./Pages/SubCategories";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="" element={<AdminDashboard />} />
           <Route path="manage-category" element={<Categories />} />
+          <Route path="manage-sub-category" element={<SubCategories />} />
           <Route path="slides" element={<Slides />} />
         </Route>
       </Routes>

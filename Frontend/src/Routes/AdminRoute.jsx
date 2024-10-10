@@ -11,7 +11,7 @@ const AdminRoute = () => {
     useEffect(() => {
       const authCheck = async (token) => {
         const res = await axios.get(
-          "http://localhost:8000/api/v1/auth/admin-auth",
+          "https://omni-yxd5.onrender.com/api/v1/auth/admin-auth",
           {
             headers: {
               Authorization: token,

@@ -11,7 +11,7 @@ const Slides = () => {
       const data = new FormData();
       data.append("image", image);
       const response = await axios.post(
-        "http://localhost:8000/api/v1/slides/create",
+        "https://omni-yxd5.onrender.com/api/v1/slides/create",
         data
       );
       toast.success(response.data.message);
@@ -25,7 +25,7 @@ const Slides = () => {
   const getAllSlides = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8000/api/v1/slides/all-slides"
+        "https://omni-yxd5.onrender.com/api/v1/slides/all-slides"
       );
       setSlides(data);
     } catch (error) {
@@ -36,7 +36,7 @@ const Slides = () => {
   const handleDelete = async (id) => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:8000/api/v1/slides/delete/${id}`
+        `https://omni-yxd5.onrender.com/api/v1/slides/delete/${id}`
       );
       toast.success(data.message);
       getAllSlides();
@@ -55,7 +55,7 @@ const Slides = () => {
           <AdminMenu />
         </div>
         <div className="basis-3/4 px-5">
-          <h1 className="text-4xl text-center font-semibold mb-10">
+          <h1 className="text-4xl text-center font-semibold mb-10 mt-5">
             All Slides
           </h1>
           <div className="grid grid-cols-2 gap-8">
@@ -65,7 +65,7 @@ const Slides = () => {
                   <img src="/delete.svg" className="w-10 h-10 mr-auto ml-auto" />
                 </button>
                 <img
-                  src={`http://localhost:8000/api/v1/slides/image/${slide._id}`}
+                  src={`https://omni-yxd5.onrender.com/api/v1/slides/image/${slide._id}`}
                   className="w-full h-56 group-hover:bg-[rgba(0,0,0,0.5)]"
                 />
               </div>

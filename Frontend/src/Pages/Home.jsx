@@ -12,7 +12,7 @@ const Home = () => {
   const getAllSlides = async () => {
     try {
       const {data} = await axios.get(
-        "http://localhost:8000/api/v1/slides/all-slides"
+        "https://omni-yxd5.onrender.com/api/v1/slides/all-slides"
       );
       setSlides(data);
     } catch (error) {
@@ -37,7 +37,7 @@ const Home = () => {
           {slides.map((slide) => (
             <SwiperSlide key={slide._id}>
               <img
-                src={`http://localhost:8000/api/v1/slides/image/${slide._id}`}
+                src={`https://omni-yxd5.onrender.com/api/v1/slides/image/${slide._id}`}
                 alt="slide"
                 className="w-full object-cover h-96"
               />

@@ -6,7 +6,7 @@ const useCategories = () => {
 
   const getCategories = async () => {
     const { data } = await axios.get(
-      "http://localhost:8000/api/v1/categories/all-categories"
+      "https://omni-yxd5.onrender.com/api/v1/categories/all-categories"
     );
     setCategories(data);
   };
