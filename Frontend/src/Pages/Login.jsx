@@ -9,7 +9,7 @@ import { useAuthContext } from "../Apis/authContext";
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const [auth, setAuth] = useAuthContext();
+  const [setAuth] = useAuthContext();
   const onSubmit = async (data) => {
     try {
       let response = await axios.post(
@@ -28,7 +28,7 @@ const Login = () => {
       navigate("/");
     } catch (error) {
         console.error(error);
-        
+        toast.error(error.response.data.message);
     }
   };
   return (
