@@ -13,6 +13,7 @@ const Navbar = () => {
       user: null,
       token: "",
     });
+    navigate("/login");
     toast.success("Successfully logged out");
   };
   const [navbar, setNavbar] = useState(false);
@@ -35,7 +36,7 @@ const Navbar = () => {
 
   useEffect(() => { 
     changeCart()
-  },[auth?.token])
+  },[auth?.user])
   return (
     <nav
       className={
