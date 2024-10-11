@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Apis/authContext";
 
 const Navbar = () => {
   const [auth, setAuth] = useAuthContext();
+  const [cart, setCart] = useState(false)
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("auth");
@@ -23,6 +24,18 @@ const Navbar = () => {
     }
   };
   addEventListener("scroll", changeNavbar);
+
+  const changeCart = () => { 
+    if (auth?.token) {
+      setCart(true)
+    } else {
+      setCart(false)
+    }
+  }
+
+  useEffect(() => { 
+    changeCart()
+  },[auth?.token])
   return (
     <nav
       className={
@@ -55,7 +68,7 @@ const Navbar = () => {
             />
             <img src="/Search.svg" className="h-6" />
           </div>
-          {auth.user ? (
+          {cart ? (
             <>
               <div className="dropdown dropdown-end">
                 <div
