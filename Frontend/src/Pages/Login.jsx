@@ -18,14 +18,13 @@ const Login = () => {
       );
       if (response.data.message === "Logged in successfully") {
         toast.success("Successfully logged in");
+      localStorage.setItem("auth", JSON.stringify(response?.data));
+      navigate("/");
       }
-      delete response?.data?.message;
       setAuth({
         user: response?.data?.allInfo,
         token: response?.data?.token,
       });
-      localStorage.setItem("auth", JSON.stringify(response?.data));
-      navigate("/");
     } catch (error) {
         console.error(error);
         toast.error(error.response.data.message);
