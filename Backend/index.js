@@ -8,8 +8,10 @@ import sizeRouter from "./routes/Size.js";
 import authRouter from "./routes/Auth.js";
 import showroomRouter from "./routes/Showroom.js";
 import slideRouter from "./routes/Slides.js";
+import productRouter from "./routes/Product.js";
 import colors from "colors";
 import connectDB from "./config/db.js";
+import { createProductView } from "./config/createProductView.js";
 
 dotenv.config();
 
@@ -26,6 +28,7 @@ app.use("/api/v1/sizes", sizeRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/slides", slideRouter);
 app.use("/api/v1/showrooms", showroomRouter);
+app.use("/api/v1/products", productRouter);
 
 app.get("/", (req, res) => {
   res.send({ message: "Welcome to omni db!" });
@@ -34,4 +37,5 @@ app.get("/", (req, res) => {
 app.listen(port, async () => {
   console.log(`Your server is running on port ${port}`.bgGreen.cyan.bold);
   await connectDB();
+  await createProductView()
 });

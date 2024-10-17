@@ -10,29 +10,46 @@ const showroomSchema = new Schema({
     required: true,
   },
   address: {
-    type: String,
-    required: true,
+    street: {
+      type: String,
+      required: true,
+    },
+    division: {
+      type: String,
+      required: true,
+    },
+    district: {
+      type: String,
+      required: true,
+    },
+    thana: {
+      type: String,
+      required: true,
+    },
   },
-  phone: {
-    type: String,
-    required: true,
+  contact: {
+    phone: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  division: {
-    type: String,
-    required: true,
-  },
-  district: {
-    type: String,
-    required: true,
-  },
-  thana: {
-    type: String,
-    required: true,
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
   },
 });
+
+showroomSchema.index({ location: "2dsphere" });
 
 export default model("showroom", showroomSchema);

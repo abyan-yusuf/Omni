@@ -3,7 +3,7 @@ import {
   createShowroom,
   deleteShowroom,
   getAllShowrooms,
-  getShowroomById,
+  getNearbyShowrooms,
   updateShowroom,
 } from "../controllers/Showroom.js";
 
@@ -13,7 +13,7 @@ router.post("/create", createShowroom);
 
 router.get("/all-showrooms", getAllShowrooms);
 
-router.get("/single/:id", getShowroomById);
+router.post("/nearby", getNearbyShowrooms);
 
 router.delete("/delete/:id", deleteShowroom);
 

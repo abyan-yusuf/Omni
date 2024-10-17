@@ -1,5 +1,5 @@
 import JWT from "jsonwebtoken";
-import authModel from "../models/Auth.js";
+import Auth from "../models/Auth.js";
 
 export const requireSignIn = async (req, res, next) => {
   try {
@@ -17,7 +17,7 @@ export const requireSignIn = async (req, res, next) => {
 
 export const isAdmin = async (req, res, next) => {
   try {
-    const user = await authModel.findById(req.user._id);
+    const user = await Auth.findById(req.user._id);
     if (!user.admin) {
       return res.status(401).send({ message: "Unauthorized" });
     } else {
