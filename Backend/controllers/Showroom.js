@@ -171,3 +171,17 @@ export const getNearbyShowrooms = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+export const getShowroomById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const showroom = await Showroom.findById(id);
+    if (!showroom) {
+      return res.status(500).send({ message: "Showroom not found" });
+    }
+    res.status(200).json(showroom);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
