@@ -51,10 +51,10 @@ const Slides = () => {
   return (
     <Layout>
       <div className="flex">
-        <div className="basis-1/4">
+        <div className="basis-1/5">
           <AdminMenu />
         </div>
-        <div className="basis-3/4 px-5">
+        <div className="basis-4/5 px-5">
           <h1 className="text-4xl text-center font-semibold mb-10 mt-5">
             All Slides
           </h1>

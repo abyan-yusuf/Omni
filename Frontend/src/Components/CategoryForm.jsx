@@ -26,6 +26,7 @@ const CategoryForm = ({
       />
       <input
         type="file"
+        required
         accept="image/*"
         onChange={(e) => setImage(e.target.files[0])}
         className="file-input file-input-bordered w-full max-w-xs"

@@ -53,12 +53,13 @@ const SubCategoryForm = ({
       <input
         required
         type="text"
-        placeholder="Category Name"
+        placeholder="Sub Category Name"
         className="input w-96 input-bordered"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       <input
+        required
         type="file"
         accept="image/*"
         onChange={(e) => setImage(e.target.files[0])}

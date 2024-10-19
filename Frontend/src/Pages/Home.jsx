@@ -29,17 +29,17 @@ const Home = () => {
           pagination={{ clickable: true }}
           navigation={true}
           modules={[Pagination, Navigation, Autoplay]}
-          className="h-96 swipper"
+          className="h-[517px] swipper"
           loop={true}
           slidesPerView={1}
           autoplay={true}
         >
           {slides.map((slide) => (
-            <SwiperSlide key={slide._id}>
+            <SwiperSlide key={slide._id} className="h-full">
               <img
                 src={`https://omni-yxd5.onrender.com/api/v1/slides/image/${slide._id}`}
                 alt="slide"
-                className="w-full object-cover h-96"
+                className="w-[100%] object-cover h-full"
               />
             </SwiperSlide>
           ))}

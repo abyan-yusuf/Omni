@@ -48,8 +48,7 @@ const Categories = () => {
       toast.error("Error while submitting");
     }
   };
-
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
       let answer = prompt(
         "Are you sure you want to delete this category?",
@@ -58,15 +57,14 @@ const Categories = () => {
       if (answer !== "Yes") {
         return;
       }
-      if (selected.length > 2) {
+      if (id.length > 2) {
         const { data } = await axios.delete(
-          `https://omni-yxd5.onrender.com/api/v1/categories/delete/${selected}`,
+          `https://omni-yxd5.onrender.com/api/v1/categories/delete/${id}`,
           { headers: { Authorization: auth.token } }
         );
         if (data) {
           toast.success("Category deleted successfully");
           getAllCategories();
-          setSelected({});
         }
       }
     } catch (error) {
@@ -148,8 +146,7 @@ const Categories = () => {
                       <button
                         className="btn btn-error text-white"
                         onClick={() => {
-                          setSelected(category._id);
-                          handleDelete();
+                          handleDelete(category._id);
                         }}
                       >
                         Delete

@@ -4,8 +4,10 @@ import { useAuthContext } from "../Apis/authContext";
 
 const Navbar = () => {
   const [auth, setAuth] = useAuthContext();
-  const [cart, setCart] = useState(false)
+  const [cart, setCart] = useState(false); // Set default to false
   const navigate = useNavigate();
+  const [navbar, setNavbar] = useState(false);
+
   const handleLogout = () => {
     localStorage.removeItem("auth");
     setAuth({
@@ -16,33 +18,47 @@ const Navbar = () => {
     navigate("/login");
     toast.success("Successfully logged out");
   };
-  const [navbar, setNavbar] = useState(false);
+
+  // Handle scrolling to change navbar style
   const changeNavbar = () => {
-    if (scrollY >= 100) {
+    if (window.scrollY >= 100) {
       setNavbar(true);
     } else {
       setNavbar(false);
     }
   };
-  addEventListener("scroll", changeNavbar);
 
-  const changeCart = () => { 
+  // Check if user is authenticated to toggle cart visibility
+  const changeCart = () => {
     if (auth?.token) {
-      setCart(true)
+      setCart(true); // Show cart if token exists
     } else {
-      setCart(false)
+      setCart(false); // Hide cart if no token
     }
-  }
+  };
 
-  useEffect(() => { 
-    changeCart()
-  },[auth?.user])
+  useEffect(() => {
+    // Add event listener for scroll
+    window.addEventListener("scroll", changeNavbar);
+
+    // Clean up scroll event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", changeNavbar);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (auth?.token) {
+      changeCart();
+    }
+  }, [auth?.token]);
+
   return (
     <nav
       className={
         navbar
-          ? "p-4 bg-base-100 shadow-sm z-[100] animate-fade-in fixed "
-          : "p-2 shadow-sm z-[100] bg-base-100  "
+          ? "p-2 bg-base-100 shadow-sm z-[100] animate-fade-in fixed"
+          : "p-2 shadow-sm z-[100] bg-base-100"
       }
     >
       <div className="navbar bg-base-100">
@@ -101,7 +117,13 @@ const Navbar = () => {
                   </li>
                 </ul>
               </div>
-              <div className="dropdown dropdown-end">
+              <div
+                className={
+                  navbar
+                    ? "dropdown dropdown-end pe-10"
+                    : "dropdown dropdown-end"
+                }
+              >
                 <div
                   tabIndex={0}
                   role="button"
@@ -129,7 +151,11 @@ const Navbar = () => {
               </div>
             </>
           ) : (
-            <div className="dropdown dropdown-end">
+            <div
+              className={
+                navbar ? "dropdown dropdown-end pe-10" : "dropdown dropdown-end"
+              }
+            >
               <div
                 tabIndex={0}
                 role="button"

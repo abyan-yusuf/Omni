@@ -56,7 +56,7 @@ const SubCategories = () => {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
       let answer = prompt(
         "Are you sure you want to delete this category?",
@@ -66,13 +66,12 @@ const SubCategories = () => {
         return;
       }
       const { data } = await axios.delete(
-        `https://omni-yxd5.onrender.com/api/v1/sub-categories/delete/${selected}`,
+        `https://omni-yxd5.onrender.com/api/v1/sub-categories/delete/${id}`,
         { headers: { Authorization: auth.token } }
       );
       if (data) {
         toast.success("Category deleted successfully");
         getAllSubCategories();
-        setSelected({});
       }
     } catch (error) {
       console.log(error);
@@ -157,9 +156,7 @@ const SubCategories = () => {
                       <button
                         className="btn btn-error text-white"
                         onClick={() => {
-                          setSelected(subCategory._id);
-                          console.log(subCategory._id);
-                          handleDelete();
+                          handleDelete(subCategory._id);
                         }}
                       >
                         Delete

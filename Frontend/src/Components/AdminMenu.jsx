@@ -16,8 +16,8 @@ const AdminMenu = () => {
       <ul
         className={
           navbar
-            ? "menu w-1/4 h-screen p-0  bg-base-100  z-10 overflow-y-scroll no-scrollbar fixed border-r-2 mt-[130px]"
-            : "menu w-1/4 h-screen p-0  bg-base-100  z-10 overflow-y-scroll no-scrollbar fixed border-r-2"
+            ? "menu w-1/5 h-screen p-0  bg-base-100  z-10 overflow-y-scroll no-scrollbar fixed border-r-2 mt-[130px]"
+            : "menu w-1/5 h-screen p-0  bg-base-100  z-10 overflow-y-scroll no-scrollbar fixed border-r-2"
         }
       >
         <h2 className="text-3xl text-center mb-10">Admin Menu</h2>
@@ -58,6 +58,19 @@ const AdminMenu = () => {
             }
           >
             Slides
+          </NavLink>
+        </li>
+        <li className="border-b-2">
+          <NavLink
+            to={"/dashboard/stores"}
+            className={({ isActive }) =>
+              [
+                isActive ? "bg-gray-200" : "",
+                "rounded-none transition-all active:text-[black!important] active:bg-[#e5e7eb!important] hover:outline-0",
+              ].join(" ")
+            }
+          >
+            Stores
           </NavLink>
         </li>
       </ul>
