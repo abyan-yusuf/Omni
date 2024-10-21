@@ -100,6 +100,7 @@ const Categories = () => {
       toast.error(error.response.data.message);
     }
   };
+  
   useEffect(() => {
     getAllCategories();
   }, []);

@@ -2,18 +2,30 @@ import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import AdminMenu from "../Components/AdminMenu";
 import axios from "axios";
-import CategoryForm from "../Components/CategoryForm";
 import { Modal } from "antd";
 import { useAuthContext } from "../Apis/authContext";
 import { toast } from "react-toastify";
 import StoreForm from "../Components/StoreForm";
+import {
+  getDistrictsByDivision,
+  getDivisions,
+  getUpazilasByDistrict,
+} from "bd-geodata";
 
 const AdminStores = () => {
   const [stores, setStores] = useState([]);
   const [auth] = useAuthContext();
-  const [updatedImage, setUpdatedImage] = useState("");
   const [selected, setSelected] = useState(" ");
   const [updatedName, setUpdatedName] = useState("");
+  const [updatedCode, setUpdatedCode] = useState("");
+  const [updatedEmail, setUpdatedEmail] = useState("");
+  const [updatedPhone, setUpdatedPhone] = useState("");
+  const [updatedStreet, setUpdatedStreet] = useState("");
+  const [updatedDivision, setUpdatedDivision] = useState("");
+  const [updatedDistrict, setUpdatedDistrict] = useState("");
+  const [updatedThana, setUpdatedThana] = useState("");
+  const [updatedLatitude, setUpdatedLatitude] = useState("");
+  const [updatedLongitude, setUpdatedLongitude] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addCategory, setAddCategory] = useState(false);
   const [name, setName] = useState("");
@@ -26,6 +38,7 @@ const AdminStores = () => {
   const [thana, setThana] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [divisionData, setDivisionData] = useState({});
 
   const getAllStores = async () => {
     const { data } = await axios.get(
@@ -37,7 +50,13 @@ const AdminStores = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log({ name, code, email, phone, street, division, district, thana, latitude, longitude });
+      const divisionName = getDivisions().filter((d) => division === d.id);
+      const districtName = getDistrictsByDivision(division).filter(
+        (d) => district === d.id
+      );
+      const thanaName = getUpazilasByDistrict(district).filter(
+        (t) => thana === t.id
+      );
       const { data } = await axios.post(
         "https://omni-yxd5.onrender.com/api/v1/showrooms/create",
         {
@@ -46,11 +65,11 @@ const AdminStores = () => {
           email,
           phone,
           street,
-          division,
-          district,
-          thana,
+          division: divisionName[0].name,
+          district: districtName[0].name,
+          thana: thanaName[0].name,
           latitude,
-          longitude
+          longitude,
         },
         { headers: { Authorization: auth.token } }
       );
@@ -75,7 +94,7 @@ const AdminStores = () => {
     }
   };
 
-const handleDelete = async (id) => {
+  const handleDelete = async (id) => {
     try {
       let answer = prompt(
         "Are you sure you want to delete this category?",
@@ -106,13 +125,30 @@ const handleDelete = async (id) => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const categoryInfo = new FormData();
-    categoryInfo.append("name", updatedName);
-    categoryInfo.append("image", updatedImage);
     try {
+      const divisionName = getDivisions().filter(
+        (d) => updatedDivision === d.id
+      );
+      const districtName = getDistrictsByDivision(updatedDivision).filter(
+        (d) => updatedDistrict === d.id
+      );
+      const thanaName = getUpazilasByDistrict(updatedDistrict).filter(
+        (t) => updatedThana === t.id
+      );
       const { data } = await axios.put(
-        `https://omni-yxd5.onrender.com/api/v1/categories/update/${selected._id}`,
-        categoryInfo,
+        `https://omni-yxd5.onrender.com/api/v1/showrooms/update/${selected._id}`,
+        {
+          name: updatedName,
+          code: updatedCode,
+          email: updatedEmail,
+          phone: updatedPhone,
+          street: updatedStreet,
+          division: divisionName[0].name,
+          district: districtName[0].name,
+          thana: thanaName[0].name,
+          latitude: updatedLatitude,
+          longitude: updatedLongitude,
+        },
         { headers: { Authorization: auth.token } }
       );
       if (data) {
@@ -127,10 +163,11 @@ const handleDelete = async (id) => {
       toast.error(error.response.data.message);
     }
   };
+
   useEffect(() => {
     getAllStores();
   }, []);
-  
+
   return (
     <Layout>
       <div className="flex">
@@ -138,7 +175,7 @@ const handleDelete = async (id) => {
           <AdminMenu />
         </div>
         <div className="basis-4/5 ml-2">
-          <h2 className="text-3xl text-center mt-5">Manage Categories</h2>
+          <h2 className="text-3xl text-center mt-5">Manage Showrooms</h2>
           <div className="overflow-x-auto mt-10">
             <table className="table mb-5">
               <thead>
@@ -182,9 +219,48 @@ const handleDelete = async (id) => {
                       <button
                         className="btn btn-primary"
                         onClick={() => {
-                          setSelected(category);
+                          setSelected(store);
                           setIsModalOpen(true);
                           setUpdatedName(store?.name);
+                          setUpdatedCode(store?.code);
+                          setUpdatedEmail(store?.contact?.email);
+                          setUpdatedPhone(store?.contact?.phone);
+                          setUpdatedStreet(store?.address?.street);
+                          setUpdatedDivision(
+                            getDivisions().filter((division) => {
+                              return division.name === store?.address?.division;
+                            })[0].id
+                          );
+                          setUpdatedDistrict(
+                            getDistrictsByDivision(
+                              getDivisions().filter((division) => {
+                                return (
+                                  division.name === store?.address?.division
+                                );
+                              })[0].id
+                            ).filter((district) => {
+                              return district.name === store?.address?.district;
+                            })[0].id
+                          );
+                          setUpdatedThana(
+                            getUpazilasByDistrict(
+                              getDistrictsByDivision(
+                                getDivisions().filter((division) => {
+                                  return (
+                                    division.name === store?.address?.division
+                                  );
+                                })[0].id
+                              ).filter((district) => {
+                                return (
+                                  district.name === store?.address?.district
+                                );
+                              })[0].id
+                            ).filter((thana) => {
+                              return thana.name === store?.address?.thana;
+                            })[0].id
+                          );
+                          setUpdatedLatitude(store?.location?.coordinates[1]);
+                          setUpdatedLongitude(store?.location?.coordinates[0]);
                         }}
                       >
                         Edit
@@ -204,10 +280,10 @@ const handleDelete = async (id) => {
             </table>
           </div>
           {addCategory ? (
-                <StoreForm
-                  handleSubmit={handleSubmit}
-                  handleCancel={handleCancel}
-                  name={name}
+            <StoreForm
+              handleSubmit={handleSubmit}
+              handleCancel={handleCancel}
+              name={name}
               setName={setName}
               code={code}
               setCode={setCode}
@@ -227,9 +303,9 @@ const handleDelete = async (id) => {
               setLatitude={setLatitude}
               longitude={longitude}
               setLongitude={setLongitude}
-                  className={"mb-5"}
-                  cancelButton={true}
-                />
+              className={"mb-5"}
+              cancelButton={true}
+            />
           ) : (
             <button
               className="btn btn-primary"
@@ -246,8 +322,27 @@ const handleDelete = async (id) => {
             footer={null}
           >
             <StoreForm
+              name={updatedName}
+              setName={setUpdatedName}
+              code={updatedCode}
+              setCode={setUpdatedCode}
+              email={updatedEmail}
+              setEmail={setUpdatedEmail}
+              phone={updatedPhone}
+              setPhone={setUpdatedPhone}
+              street={updatedStreet}
+              setStreet={setUpdatedStreet}
+              division={updatedDivision}
+              setDivision={setUpdatedDivision}
+              district={updatedDistrict}
+              setDistrict={setUpdatedDistrict}
+              thana={updatedThana}
+              setThana={setUpdatedThana}
+              latitude={updatedLatitude}
+              setLatitude={setUpdatedLatitude}
+              longitude={updatedLongitude}
+              setLongitude={setUpdatedLongitude}
               handleSubmit={handleUpdate}
-              id={selected?._id}
             />
           </Modal>
         </div>

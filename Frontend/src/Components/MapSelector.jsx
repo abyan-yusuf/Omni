@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const MapSelector = ({ setLatitude, setLongitude }) => {
   const inputRef = useRef(null);

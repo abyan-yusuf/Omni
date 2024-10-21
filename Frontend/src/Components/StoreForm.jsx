@@ -1,8 +1,11 @@
-import { useState } from "react";
-import divisions from "../../public/divisions.json";
-import districts from "../../public/districts.json";
+import { useEffect, useState } from "react";
 import thanas from "../../public/thanas.json";
 import MapSelector from "./MapSelector";
+import {
+  getDistrictsByDivision,
+  getDivisions,
+  getUpazilasByDistrict,
+} from "bd-geodata";
 
 const StoreForm = ({
   handleSubmit,
@@ -30,30 +33,43 @@ const StoreForm = ({
   handleCancel,
   className,
 }) => {
+  const [divisions, setDivisions] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [thanas, setThanas] = useState([]);
+  const getData = async () => {
+    setDivisions(getDivisions());
+  };
+
   const [store, setStore] = useState({});
-  const [allThanas, setThanas] = useState([]);
-  const [allDistricts, setDistricts] = useState([]);
 
   const getDistricts = async (division_id) => {
     try {
-      const filteredDistricts = districts.filter(
-        (district) => district.division_id === division_id
-      );
-      setDistricts(filteredDistricts);
+      setDistricts(getDistrictsByDivision(division_id));
     } catch (error) {
       console.error(error);
     }
   };
   const getThanas = async (district_id) => {
     try {
-      const filteredThanas = thanas.filter(
-        (thana) => thana.district_id === district_id
-      );
-      setThanas(filteredThanas);
+      setThanas(getUpazilasByDistrict(district_id));
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
+  useEffect(() => {
+    if (division) {
+      getDistricts(division); // Automatically fetch districts when division is set
+    }
+  }, [division]);
+  useEffect(() => {
+    if (district) {
+      getThanas(district); // Automatically fetch thanas when district is set
+    }
+  }, [district]);
 
   return (
     <form
@@ -61,7 +77,7 @@ const StoreForm = ({
       onSubmit={handleSubmit}
     >
       <input
-        required
+        required={cancelButton}
         type="text"
         placeholder="Store Name"
         className="input w-96 input-bordered"
@@ -69,7 +85,7 @@ const StoreForm = ({
         onChange={(e) => setName(e.target.value)}
       />
       <input
-        required
+        required={cancelButton}
         type="text"
         placeholder="Store Code"
         className="input w-96 input-bordered"
@@ -77,7 +93,7 @@ const StoreForm = ({
         onChange={(e) => setCode(e.target.value)}
       />
       <input
-        required
+        required={cancelButton}
         type="text"
         placeholder="Street"
         className="input w-96 input-bordered"
@@ -87,37 +103,37 @@ const StoreForm = ({
       <select
         className="select select-bordered w-96"
         required
-        value={division}
+        value={division ? division : " "}
         onChange={(e) => {
           getDistricts(`${e.target.value}`);
           setDivision(e.target.value);
         }}
       >
-        <option disabled selected>
+        <option disabled selected value={" "}>
           Select Division
         </option>
         {divisions.map((division) => (
           <option key={division?.id} value={division?.id}>
-            {division?.name}
+            {division?.name}({division?.bn_name})
           </option>
         ))}
       </select>
       <select
         className="select select-bordered w-96"
         required
-        value={district}
+        value={district ? district : " "}
         onChange={(e) => {
           getThanas(e.target.value);
           setDistrict(e.target.value);
         }}
       >
-        <option disabled selected>
+        <option disabled selected value={" "}>
           Select District
         </option>
-        {allDistricts.length > 0 ? (
-          allDistricts?.map((district) => (
+        {districts.length > 0 ? (
+          districts?.map((district) => (
             <option key={district?.id} value={district?.id}>
-              {district?.name}
+              {district?.name}({district?.bn_name})
             </option>
           ))
         ) : (
@@ -126,17 +142,17 @@ const StoreForm = ({
       </select>
       <select
         className="select select-bordered w-96"
-        value={thana}
+        value={thana ? thana : " "}
         onChange={(e) => setThana(e.target.value)}
         required
       >
-        <option disabled selected>
+        <option disabled selected value={" "}>
           Select Thana
         </option>
-        {allThanas?.length > 0 ? (
-          allThanas?.map((thana) => (
+        {thanas?.length > 0 ? (
+          thanas?.map((thana) => (
             <option key={thana?.id} value={thana?.id}>
-              {thana?.name}
+              {thana?.name}({thana?.bn_name})
             </option>
           ))
         ) : (
@@ -144,24 +160,33 @@ const StoreForm = ({
         )}
       </select>
       <input
-        required
-        type="text"
+        required={cancelButton}
+        type="email"
         placeholder="Email"
         className="input w-96 input-bordered"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
-        required
-        type="text"
+        required={cancelButton}
+        type="tel"
         placeholder="Phone"
         className="input w-96 input-bordered"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
       />{" "}
-      <MapSelector setLatitude={setLatitude} setLongitude={setLongitude} />
+      <MapSelector
+        setLatitude={setLatitude}
+        setLongitude={setLongitude}
+        latitude={latitude}
+        longitude={longitude}
+      />
       <div className="space-x-2">
-        <button type="submit" className="btn btn-primary w-20">
+        <button
+          type="submit"
+          className="btn btn-primary w-20"
+          disabled={!latitude || !longitude}
+        >
           Submit
         </button>
         {cancelButton ? (
