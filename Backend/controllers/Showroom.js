@@ -10,7 +10,7 @@ export const createShowroom = async (req, res) => {
       street,
       division,
       district,
-      thana,
+      area,
       latitude,
       longitude
     } = req.body;
@@ -24,7 +24,7 @@ export const createShowroom = async (req, res) => {
       return res.status(500).send({ message: "Division is required" });
     if (!district)
       return res.status(500).send({ message: "District is required" });
-    if (!thana) return res.status(500).send({ message: "Thana is required" });
+    if (!area) return res.status(500).send({ message: "Area is required" });
     if (!latitude || !longitude)
       return res.status(500).send({ message: "Coordinates is required" });
     const existingShowroom = await Showroom.findOne({ code });
@@ -38,7 +38,7 @@ export const createShowroom = async (req, res) => {
           street,
           division,
           district,
-          thana,
+          area,
         },
         contact: {
           email,
@@ -81,7 +81,7 @@ export const updateShowroom = async (req, res) => {
       street,
       division,
       district,
-      thana,
+      area,
       latitude,
       longitude
     } = req.body;
@@ -95,7 +95,7 @@ export const updateShowroom = async (req, res) => {
       return res.status(500).send({ message: "Division is required" });
     if (!district)
       return res.status(500).send({ message: "District is required" });
-    if (!thana) return res.status(500).send({ message: "Thana is required" });
+    if (!area) return res.status(500).send({ message: "Area is required" });
     if (!latitude || !longitude)
       return res.status(500).send({ message: "Coordinates is required" });
     const existingShowroom = await Showroom.findById(id);
@@ -111,7 +111,7 @@ export const updateShowroom = async (req, res) => {
           street,
           division,
           district,
-          thana,
+          area,
         },
         contact: {
           email,

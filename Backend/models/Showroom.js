@@ -22,7 +22,7 @@ const showroomSchema = new Schema({
       type: String,
       required: true,
     },
-    thana: {
+    area: {
       type: String,
       required: true,
     },

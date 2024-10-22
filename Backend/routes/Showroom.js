@@ -4,6 +4,7 @@ import {
   deleteShowroom,
   getAllShowrooms,
   getNearbyShowrooms,
+  getShowroomById,
   updateShowroom,
 } from "../controllers/Showroom.js";
 import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
