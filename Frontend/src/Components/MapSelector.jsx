@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const MapSelector = ({ setLatitude, setLongitude }) => {
+const MapSelector = ({ setLatitude, setLongitude, latitude, longitude }) => {
   const inputRef = useRef(null);
   const mapRef = useRef(null);
   const markerRef = useRef(null);
@@ -13,8 +13,8 @@ const MapSelector = ({ setLatitude, setLongitude }) => {
 
     window.initMap = () => {
       const map = new window.google.maps.Map(document.getElementById("map"), {
-        center: { lat: 23.8103, lng: 90.4125 },
-        zoom: 12,
+        center: { lat: latitude || 23.8103, lng: longitude || 90.4125 },
+        zoom: latitude && longitude ? 20 : 12,
       });
       mapRef.current = map;
 
@@ -50,7 +50,7 @@ const MapSelector = ({ setLatitude, setLongitude }) => {
         }
       });
     };
-  }, [setLatitude, setLongitude]);
+  }, [setLatitude, setLongitude, latitude, longitude]);
 
   return (
     <div>

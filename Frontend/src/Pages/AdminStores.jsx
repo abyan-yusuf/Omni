@@ -6,11 +6,7 @@ import { Modal } from "antd";
 import { useAuthContext } from "../Apis/authContext";
 import { toast } from "react-toastify";
 import StoreForm from "../Components/StoreForm";
-import {
-  getDistrictsByDivision,
-  getDivisions,
-  getUpazilasByDistrict,
-} from "bd-geodata";
+import { getDistrictsByDivision, getDivisions } from "bd-geodata";
 
 const AdminStores = () => {
   const [stores, setStores] = useState([]);
@@ -23,7 +19,7 @@ const AdminStores = () => {
   const [updatedStreet, setUpdatedStreet] = useState("");
   const [updatedDivision, setUpdatedDivision] = useState("");
   const [updatedDistrict, setUpdatedDistrict] = useState("");
-  const [updatedThana, setUpdatedThana] = useState("");
+  const [updatedArea, setUpdatedArea] = useState("");
   const [updatedLatitude, setUpdatedLatitude] = useState("");
   const [updatedLongitude, setUpdatedLongitude] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,10 +31,9 @@ const AdminStores = () => {
   const [street, setStreet] = useState("");
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
-  const [thana, setThana] = useState("");
+  const [area, setArea] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [divisionData, setDivisionData] = useState({});
 
   const getAllStores = async () => {
     const { data } = await axios.get(
@@ -54,9 +49,6 @@ const AdminStores = () => {
       const districtName = getDistrictsByDivision(division).filter(
         (d) => district === d.id
       );
-      const thanaName = getUpazilasByDistrict(district).filter(
-        (t) => thana === t.id
-      );
       const { data } = await axios.post(
         "https://omni-yxd5.onrender.com/api/v1/showrooms/create",
         {
@@ -67,13 +59,14 @@ const AdminStores = () => {
           street,
           division: divisionName[0].name,
           district: districtName[0].name,
-          thana: thanaName[0].name,
+          area,
           latitude,
           longitude,
         },
         { headers: { Authorization: auth.token } }
       );
       if (data) {
+        setAddCategory(false);
         toast.success(data.message);
         getAllStores();
         setName("");
@@ -86,7 +79,6 @@ const AdminStores = () => {
         setThana("");
         setLatitude("");
         setLongitude("");
-        setAddCategory(false);
       }
     } catch (error) {
       console.log(error);
@@ -132,9 +124,6 @@ const AdminStores = () => {
       const districtName = getDistrictsByDivision(updatedDivision).filter(
         (d) => updatedDistrict === d.id
       );
-      const thanaName = getUpazilasByDistrict(updatedDistrict).filter(
-        (t) => updatedThana === t.id
-      );
       const { data } = await axios.put(
         `https://omni-yxd5.onrender.com/api/v1/showrooms/update/${selected._id}`,
         {
@@ -145,16 +134,16 @@ const AdminStores = () => {
           street: updatedStreet,
           division: divisionName[0].name,
           district: districtName[0].name,
-          thana: thanaName[0].name,
+          area: updatedArea,
           latitude: updatedLatitude,
           longitude: updatedLongitude,
         },
         { headers: { Authorization: auth.token } }
       );
       if (data) {
+        setIsModalOpen(false);
         toast.success("Category updated successfully");
         setUpdatedName("");
-        setIsModalOpen(false);
         getAllStores();
       }
       console.log(data);
@@ -210,7 +199,7 @@ const AdminStores = () => {
                     <td>{store.name}</td>
                     <td>{store.code}</td>
                     <td>{store.address.street}</td>
-                    <td>{store.address.thana}</td>
+                    <td>{store.address.area}</td>
                     <td>{store.address.district}</td>
                     <td>{store.address.division}</td>
                     <td>{store.contact.email}</td>
@@ -242,23 +231,7 @@ const AdminStores = () => {
                               return district.name === store?.address?.district;
                             })[0].id
                           );
-                          setUpdatedThana(
-                            getUpazilasByDistrict(
-                              getDistrictsByDivision(
-                                getDivisions().filter((division) => {
-                                  return (
-                                    division.name === store?.address?.division
-                                  );
-                                })[0].id
-                              ).filter((district) => {
-                                return (
-                                  district.name === store?.address?.district
-                                );
-                              })[0].id
-                            ).filter((thana) => {
-                              return thana.name === store?.address?.thana;
-                            })[0].id
-                          );
+                          setUpdatedArea(store?.address?.area);
                           setUpdatedLatitude(store?.location?.coordinates[1]);
                           setUpdatedLongitude(store?.location?.coordinates[0]);
                         }}
@@ -297,8 +270,8 @@ const AdminStores = () => {
               setDivision={setDivision}
               district={district}
               setDistrict={setDistrict}
-              thana={thana}
-              setThana={setThana}
+              area={area}
+              setArea={setArea}
               latitude={latitude}
               setLatitude={setLatitude}
               longitude={longitude}
@@ -336,8 +309,8 @@ const AdminStores = () => {
               setDivision={setUpdatedDivision}
               district={updatedDistrict}
               setDistrict={setUpdatedDistrict}
-              thana={updatedThana}
-              setThana={setUpdatedThana}
+              thana={updatedArea}
+              setThana={setUpdatedArea}
               latitude={updatedLatitude}
               setLatitude={setUpdatedLatitude}
               longitude={updatedLongitude}
