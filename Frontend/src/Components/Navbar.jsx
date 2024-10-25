@@ -175,7 +175,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="px-72 mt-5 font-['forum'] font-semibold tracking-widest z-50 ">
-        <ul className="flex space-x-20">
+        <ul className="flex space-x-20 font-[forum]">
           <li>
             <Link to={"/omni"}>OMNI</Link>
           </li>

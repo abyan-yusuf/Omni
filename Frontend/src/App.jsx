@@ -12,6 +12,7 @@ import Categories from "./Pages/Categories";
 import Slides from "./Pages/Slides";
 import SubCategories from "./Pages/SubCategories";
 import AdminStores from "./Pages/AdminStores";
+import Showrooms from "./Pages/Showrooms";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="slides" element={<Slides />} />
           <Route path="stores" element={<AdminStores />} />
         </Route>
+        <Route path="/showrooms" element={<Showrooms/>} />
       </Routes>
     </>
   );

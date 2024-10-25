@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import thanas from "../../public/thanas.json";
 import MapSelector from "./MapSelector";
 import {
   getAreasByDistrict,

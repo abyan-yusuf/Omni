@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 
-const Layout = ({ children, title, desc, keywords, author }) => {
+const Layout = ({ children, title, desc, keywords, author, className }) => {
   return (
     <>
       <Helmet>
@@ -15,7 +15,7 @@ const Layout = ({ children, title, desc, keywords, author }) => {
       <header>
         <Navbar />
       </header>
-      <main className="min-h-screen pb-20">{children}</main>
+      <main className={"min-h-screen pb-20 " + className}>{children}</main>
       <footer>
         <Footer />
       </footer>
