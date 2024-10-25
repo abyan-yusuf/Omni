@@ -122,7 +122,9 @@ export const updateShowroom = async (req, res) => {
           coordinates: [longitude, latitude],
         },
       },
-      { new: true }
+      {
+        new: true,
+       }
     );
     return res
       .status(200)
@@ -161,7 +163,7 @@ export const getNearbyShowrooms = async (req, res) => {
             type: "Point",
             coordinates: [longitude, latitude],
           },
-          $maxDistance: 10000,
+          $maxDistance: 30000,
         },
       },
     });
@@ -185,3 +187,18 @@ export const getShowroomById = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+export const getFilteredShowrooms = async (req, res) => {
+  try {
+    const { division, district, area } = req.body;
+    const filteredShowrooms = await Showroom.find({
+      "address.division": division,
+      "address.district": district,
+      "address.area": area,
+    })
+    res.status(200).json(filteredShowrooms);
+  } catch (error) {
+    console.error(error)
+    res.status(500).send(error)
+  }
+}

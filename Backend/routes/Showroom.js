@@ -11,8 +11,7 @@ import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
 
 const router = Router();
 
-router.post("/create", requireSignIn
-  , isAdmin, createShowroom);
+router.post("/create", requireSignIn, isAdmin, createShowroom);
 
 router.get("/all-showrooms", getAllShowrooms);
 
