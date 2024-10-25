@@ -3,6 +3,7 @@ import {
   createShowroom,
   deleteShowroom,
   getAllShowrooms,
+  getFilteredShowrooms,
   getNearbyShowrooms,
   getShowroomById,
   updateShowroom,
@@ -22,5 +23,7 @@ router.delete("/delete/:id", requireSignIn, isAdmin, deleteShowroom);
 router.put("/update/:id", requireSignIn, isAdmin, updateShowroom);
 
 router.get("/single/:id", getShowroomById);
+
+router.post("/filtered-showrooms", getFilteredShowrooms);
 
 export default router;

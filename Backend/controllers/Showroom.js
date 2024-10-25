@@ -12,7 +12,7 @@ export const createShowroom = async (req, res) => {
       district,
       area,
       latitude,
-      longitude
+      longitude,
     } = req.body;
     if (!name) return res.status(500).send({ message: "Name is required" });
     if (!code) return res.status(500).send({ message: "Code is required" });
@@ -83,7 +83,7 @@ export const updateShowroom = async (req, res) => {
       district,
       area,
       latitude,
-      longitude
+      longitude,
     } = req.body;
     if (!name) return res.status(500).send({ message: "Name is required" });
     if (!code) return res.status(500).send({ message: "Code is required" });
@@ -124,7 +124,7 @@ export const updateShowroom = async (req, res) => {
       },
       {
         new: true,
-       }
+      }
     );
     return res
       .status(200)
@@ -191,14 +191,23 @@ export const getShowroomById = async (req, res) => {
 export const getFilteredShowrooms = async (req, res) => {
   try {
     const { division, district, area } = req.body;
-    const filteredShowrooms = await Showroom.find({
-      "address.division": division,
-      "address.district": district,
-      "address.area": area,
-    })
+
+    let filter = {};
+
+    if (division) {
+      filter["address.division"] = division;
+    }
+    if (district) {
+      filter["address.district"] = district;
+    }
+    if (area) {
+      filter["address.area"] = area;
+    }
+    console.log(filter)
+    const filteredShowrooms = await Showroom.find(filter);
     res.status(200).json(filteredShowrooms);
   } catch (error) {
-    console.error(error)
-    res.status(500).send(error)
+    console.error(error);
+    res.status(500).send(error);
   }
-}
+};
