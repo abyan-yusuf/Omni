@@ -57,7 +57,7 @@ const Navbar = () => {
     <nav
       className={
         navbar
-          ? "p-2 bg-base-100 shadow-sm z-[100] animate-fade-in fixed"
+          ? "p-2 bg-base-100 shadow-sm z-[100] animate-fade-in fixed top-0"
           : "p-2 shadow-sm z-[100] bg-base-100"
       }
     >

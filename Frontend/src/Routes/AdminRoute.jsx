@@ -7,7 +7,8 @@ import Loader from "../Components/Loader";
 const AdminRoute = () => {
   try {
     const [ok, setOk] = useState(false);
-    const [auth] = useAuthContext();
+    const [je, setJe] = useState(false);
+    const [auth, setAuth] = useAuthContext();
     useEffect(() => {
       const authCheck = async (token) => {
         const res = await axios.get(
@@ -18,13 +19,13 @@ const AdminRoute = () => {
             },
           }
         );
-        console.log(res);
         if (res.data.ok) {
           setOk(true);
-        } else {
+        } else  {
           setOk(false);
         }
       };
+      
       if (auth.token) {
         authCheck(auth.token);
       }
@@ -32,7 +33,11 @@ const AdminRoute = () => {
 
     return ok ? <Outlet /> : <Loader />;
   } catch (error) {
-    console.error(error);
+    if (error.response.data.name === "TokenExpiredError") {
+      setJe(true);
+      setAuth({});
+      return localStorage.removeItem("auth");
+    }
   }
 };
 
