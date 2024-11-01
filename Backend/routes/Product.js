@@ -5,6 +5,7 @@ import {
   createProduct,
   createPSize,
   getAllProducts,
+  updateProduct,
 } from "../controllers/Product.js";
 import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
 import ExpressFormidable from "express-formidable";
@@ -12,6 +13,8 @@ import ExpressFormidable from "express-formidable";
 const router = Router();
 
 router.post("/create", requireSignIn, isAdmin, createProduct);
+
+router.put("/update/:id", requireSignIn, isAdmin, updateProduct);
 
 router.post("/create-color", requireSignIn, isAdmin, createPColor);
 

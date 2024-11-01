@@ -30,6 +30,7 @@ app.use("/api/v1/slides", slideRouter);
 app.use("/api/v1/showrooms", showroomRouter);
 app.use("/api/v1/products", productRouter);
 
+
 app.get("/", (req, res) => {
   res.send({ message: "Welcome to omni db!" });
 });

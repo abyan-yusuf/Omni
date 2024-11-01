@@ -4,7 +4,6 @@ import ProductImage from "../models/ProductImage.js";
 import fs from "fs";
 import ProductSize from "../models/ProductSize.js";
 import mongoose from "mongoose";
-import Color from "../models/Color.js";
 
 export const createProduct = async (req, res) => {
   try {
@@ -51,6 +50,50 @@ export const createProduct = async (req, res) => {
   }
 };
 
+export const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      name,
+      code,
+      description,
+      originalPrice,
+      discountPrice,
+      category,
+      subCategory,
+      featured,
+      bestSeller,
+    } = req.body;
+
+    const existingProduct = await Product.findById(id);
+    if (!existingProduct)
+      return res.status(404).send({ message: "Product not found" });
+
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        name: name || existingProduct.name,
+        code: code || existingProduct.code,
+        description: description || existingProduct.description,
+        originalPrice: originalPrice || existingProduct.originalPrice,
+        discountPrice: discountPrice || existingProduct.discountPrice,
+        category: category || existingProduct.category,
+        subCategory: subCategory || existingProduct.subCategory,
+        featured: featured || existingProduct.featured,
+        bestSeller: bestSeller || existingProduct.bestSeller,
+      },
+      { new: true }
+    );
+    return res
+      .status(200)
+      .send({ message: "Product updated successfully", updatedProduct });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
+
 export const createPColor = async (req, res) => {
   try {
     const { product, color } = req.body;
@@ -60,7 +103,11 @@ export const createPColor = async (req, res) => {
     const existingProductColor = await ProductColor.findOne({ product, color });
     if (existingProductColor)
       return res.status(500).send({ message: "Product Color already exists" });
-  const newProductColor = new ProductColor({ product, color, default: req.body.default || false });
+    const newProductColor = new ProductColor({
+      product,
+      color,
+      default: req.body.default || false,
+    });
     await newProductColor.save();
     return res
       .status(200)
@@ -77,7 +124,10 @@ export const createPImage = async (req, res) => {
     const { image } = req.files;
     if (!product_color)
       return res.status(404).send({ message: "Product Color Id is required" });
-    const newProductImage = new ProductImage({ product_color, default: req.fields.default || false });
+    const newProductImage = new ProductImage({
+      product_color,
+      default: req.fields.default || false,
+    });
     if (image) {
       newProductImage.image.data = fs.readFileSync(image.path);
       newProductImage.image.contentType = image.type;
@@ -114,9 +164,7 @@ export const getAllProducts = async (req, res) => {
   try {
     const db = mongoose.connection;
     const allProducts = await db.collection("ProductView").find().toArray();
-    res
-      .status(200)
-      .json(allProducts);
+    res.status(200).json(allProducts);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
