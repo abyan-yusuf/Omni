@@ -118,6 +118,23 @@ export const createPColor = async (req, res) => {
   }
 };
 
+export const deletePColor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedProductColor = await ProductColor.findByIdAndDelete(id);
+    const deletedProductSize = await ProductSize.findByIdAndDelete({ color: id });
+    const deletedProductImage = await ProductImage.deleteMany({ product_color: id });
+    if (!deletedProductColor)
+      return res.status(404).send({ message: "Product Color not found" });
+    return res
+      .status(200)
+      .send({ message: "Product Color deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
+
 export const createPImage = async (req, res) => {
   try {
     const { product_color } = req.fields;
@@ -142,6 +159,21 @@ export const createPImage = async (req, res) => {
   }
 };
 
+export const deletePImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedProductImage = await ProductImage.findByIdAndDelete(id);
+    if (!deletedProductImage)
+      return res.status(404).send({ message: "Product Image not found" });
+    return res
+      .status(200)
+      .send({ message: "Product Image deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
+
 export const createPSize = async (req, res) => {
   try {
     const { color, sizes } = req.body;
@@ -160,6 +192,26 @@ export const createPSize = async (req, res) => {
   }
 };
 
+export const updatePSize = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { sizes } = req.body;
+    if (!sizes)
+      return res.status(500).send({ message: "Product Size Id is required" });
+    const updatedProductSize = await ProductSize.findByIdAndUpdate(
+      id,
+      { sizes },
+      { new: true }
+    );
+    return res
+      .status(200)
+      .send({ message: "Product Size updated successfully", updatedProductSize });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
+
 export const getAllProducts = async (req, res) => {
   try {
     const db = mongoose.connection;
@@ -170,3 +222,18 @@ export const getAllProducts = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+export const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedProduct = await Product.findByIdAndDelete(id);
+    if (!deletedProduct)
+      return res.status(404).send({ message: "Product not found" });
+    return res
+      .status(200)
+      .send({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+}
