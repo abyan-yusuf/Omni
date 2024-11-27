@@ -14,6 +14,10 @@ import SubCategories from "./Pages/SubCategories";
 import AdminStores from "./Pages/AdminStores";
 import Showrooms from "./Pages/Showrooms";
 import ShowroomDetails from "./Pages/ShowroomDetails";
+import AdminColors from "./Pages/AdminColors";
+import AdminSizes from "./Pages/AdminSizes";
+import AdminProducts from "./Pages/AdminProducts";
+import AdminProductDetails from "./Pages/AdminProductDetails";
 
 const App = () => {
   return (
@@ -30,6 +34,10 @@ const App = () => {
           <Route path="manage-sub-category" element={<SubCategories />} />
           <Route path="slides" element={<Slides />} />
           <Route path="stores" element={<AdminStores />} />
+          <Route path="colors" element={<AdminColors />} />
+          <Route path="sizes" element={<AdminSizes />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="products/details/:id" element={<AdminProductDetails />} />
         </Route>
         <Route path="/showrooms" element={<Showrooms />} />
         <Route path="/showrooms/details/:id" element={<ShowroomDetails />} />

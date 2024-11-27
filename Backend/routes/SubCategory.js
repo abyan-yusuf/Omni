@@ -31,4 +31,5 @@ router.delete("/delete/:subid", requireSignIn, isAdmin, deleteSubCategory);
 
 router.get("/image/:subid", getImageById);
 
+
 export default router;

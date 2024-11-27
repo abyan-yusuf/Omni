@@ -37,7 +37,7 @@ const AdminStores = () => {
 
   const getAllStores = async () => {
     const { data } = await axios.get(
-      "https://omni-yxd5.onrender.com/api/v1/showrooms/all-showrooms"
+      "/api/v1/showrooms/all-showrooms"
     );
     setStores(data);
   };
@@ -50,7 +50,7 @@ const AdminStores = () => {
         (d) => district === d.id
       );
       const { data } = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/showrooms/create",
+        "/api/v1/showrooms/create",
         {
           name,
           code,
@@ -88,15 +88,14 @@ const AdminStores = () => {
 
   const handleDelete = async (id) => {
     try {
-      let answer = prompt(
-        "Are you sure you want to delete this category?",
-        "Yes"
+      let answer = window.confirm(
+        "Are you sure you want to delete this store?"
       );
-      if (answer !== "Yes") {
+      if (!answer) {
         return;
       } else if (id.length > 2) {
         const { data } = await axios.delete(
-          `https://omni-yxd5.onrender.com/api/v1/showrooms/delete/${id}`,
+          `/api/v1/showrooms/delete/${id}`,
           { headers: { Authorization: auth.token } }
         );
         if (data) {
@@ -125,7 +124,7 @@ const AdminStores = () => {
         (d) => updatedDistrict === d.id
       );
       const { data } = await axios.put(
-        `https://omni-yxd5.onrender.com/api/v1/showrooms/update/${selected._id}`,
+        `/api/v1/showrooms/update/${selected._id}`,
         {
           name: updatedName,
           code: updatedCode,
@@ -316,6 +315,7 @@ const AdminStores = () => {
               longitude={updatedLongitude}
               setLongitude={setUpdatedLongitude}
               handleSubmit={handleUpdate}
+              handleDelete={handleDelete}
             />
           </Modal>
         </div>

@@ -1,9 +1,5 @@
 import Product from "../models/Product.js";
-import ProductColor from "../models/ProductColor.js";
-import ProductImage from "../models/ProductImage.js";
 import fs from "fs";
-import ProductSize from "../models/ProductSize.js";
-import mongoose from "mongoose";
 
 export const createProduct = async (req, res) => {
   try {
@@ -13,9 +9,15 @@ export const createProduct = async (req, res) => {
       description,
       originalPrice,
       discountPrice,
+      bestSeller,
+      featured,
+      color,
+      sizes,
       category,
       subCategory,
-    } = req.body;
+    } = req.fields;
+
+    const { image1, image2 } = req.files;
     if (!name) return res.status(404).send({ message: "Name is required" });
     if (!code) return res.status(404).send({ message: "Code is required" });
     if (!description)
@@ -28,18 +30,31 @@ export const createProduct = async (req, res) => {
       return res.status(404).send({ message: "Category is required" });
     if (!subCategory)
       return res.status(404).send({ message: "Sub Category is required" });
-    const existingProduct = await Product.findOne({ name });
-    if (existingProduct)
-      return res.status(500).send({ message: "Product already exists" });
+    if (!image1)
+      return res.status(404).send({ message: "Image 1 is required" });
+    if (!image2)
+      return res.status(404).send({ message: "Image 2 is required" });
+    if (!color) return res.status(404).send({ message: "Color is required" });
+    if (!sizes) return res.status(404).send({ message: "Sizes is required" });
+    const existingProductByCode = await Product.findOne({ code });
+    const existingProductByName = await Product.findOne({ name });
+    if (existingProductByCode || existingProductByName)
+      return res
+        .status(500)
+        .send({ message: "Product already exists by code or name" });
+
+    const sizesArray = typeof sizes === "string" ? JSON.parse(sizes) : sizes;
+
     const newProduct = new Product({
-      name,
-      code,
-      description,
-      originalPrice,
-      discountPrice,
-      category,
-      subCategory,
+      ...req.fields,
+      sizes: sizesArray,
     });
+
+    newProduct.image1.data = fs.readFileSync(image1.path);
+    newProduct.image1.contentType = image1.type;
+    newProduct.image2.data = fs.readFileSync(image2.path);
+    newProduct.image2.contentType = image2.type;
+
     await newProduct.save();
     return res
       .status(200)
@@ -59,32 +74,57 @@ export const updateProduct = async (req, res) => {
       description,
       originalPrice,
       discountPrice,
+      color,
+      sizes,
       category,
       subCategory,
-      featured,
-      bestSeller,
-    } = req.body;
+    } = req.fields;
+
+    const { image1, image2 } = req.files;
+
+    if (!name) return res.status(404).send({ message: "Name is required" });
+    if (!code) return res.status(404).send({ message: "Code is required" });
+    if (!description)
+      return res.status(404).send({ message: "Description is required" });
+    if (!originalPrice)
+      return res.status(404).send({ message: "Original Price is required" });
+    if (!discountPrice)
+      return res.status(404).send({ message: "Discount Price is required" });
+    if (!category)
+      return res.status(404).send({ message: "Category is required" });
+    if (!subCategory)
+      return res.status(404).send({ message: "Sub Category is required" });
+    if (!color) return res.status(404).send({ message: "Color is required" });
+    if (!sizes) return res.status(404).send({ message: "Sizes is required" });
 
     const existingProduct = await Product.findById(id);
     if (!existingProduct)
+      return res.status(500).send({ message: "Product does not exist" });
+
+    const sizesArray = typeof sizes === "string" ? JSON.parse(sizes) : sizes;
+
+    const data = {
+      ...req.fields,
+      sizes: sizesArray,
+    };
+    const updatedProduct = await Product.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+
+    if (image1?.path && image1?.type) {
+      updatedProduct.image1.data = fs.readFileSync(image1.path);
+      updatedProduct.image1.contentType = image1.type;
+    }
+
+    if (image2?.path && image2?.type) {
+      updatedProduct.image2.data = fs.readFileSync(image2.path);
+      updatedProduct.image2.contentType = image2.type;
+    }
+
+    await updatedProduct.save();
+
+    if (!updatedProduct)
       return res.status(404).send({ message: "Product not found" });
-
-
-    const updatedProduct = await Product.findByIdAndUpdate(
-      id,
-      {
-        name: name || existingProduct.name,
-        code: code || existingProduct.code,
-        description: description || existingProduct.description,
-        originalPrice: originalPrice || existingProduct.originalPrice,
-        discountPrice: discountPrice || existingProduct.discountPrice,
-        category: category || existingProduct.category,
-        subCategory: subCategory || existingProduct.subCategory,
-        featured: featured || existingProduct.featured,
-        bestSeller: bestSeller || existingProduct.bestSeller,
-      },
-      { new: true }
-    );
     return res
       .status(200)
       .send({ message: "Product updated successfully", updatedProduct });
@@ -94,129 +134,9 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-export const createPColor = async (req, res) => {
-  try {
-    const { product, color } = req.body;
-    if (!product)
-      return res.status(404).send({ message: "Product Id is required" });
-    if (!color) return res.status(404).send({ message: "Color is required" });
-    const existingProductColor = await ProductColor.findOne({ product, color });
-    if (existingProductColor)
-      return res.status(500).send({ message: "Product Color already exists" });
-    const newProductColor = new ProductColor({
-      product,
-      color,
-      default: req.body.default || false,
-    });
-    await newProductColor.save();
-    return res
-      .status(200)
-      .send({ message: "Product Color created successfully", newProductColor });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error);
-  }
-};
-
-export const deletePColor = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedProductColor = await ProductColor.findByIdAndDelete(id);
-    const deletedProductSize = await ProductSize.findByIdAndDelete({ color: id });
-    const deletedProductImage = await ProductImage.deleteMany({ product_color: id });
-    if (!deletedProductColor)
-      return res.status(404).send({ message: "Product Color not found" });
-    return res
-      .status(200)
-      .send({ message: "Product Color deleted successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error);
-  }
-};
-
-export const createPImage = async (req, res) => {
-  try {
-    const { product_color } = req.fields;
-    const { image } = req.files;
-    if (!product_color)
-      return res.status(404).send({ message: "Product Color Id is required" });
-    const newProductImage = new ProductImage({
-      product_color,
-      default: req.fields.default || false,
-    });
-    if (image) {
-      newProductImage.image.data = fs.readFileSync(image.path);
-      newProductImage.image.contentType = image.type;
-    } else return res.status(404).send({ message: "Image is required" });
-    await newProductImage.save();
-    return res
-      .status(200)
-      .send({ message: "Product Image created successfully", newProductImage });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error);
-  }
-};
-
-export const deletePImage = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedProductImage = await ProductImage.findByIdAndDelete(id);
-    if (!deletedProductImage)
-      return res.status(404).send({ message: "Product Image not found" });
-    return res
-      .status(200)
-      .send({ message: "Product Image deleted successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error);
-  }
-};
-
-export const createPSize = async (req, res) => {
-  try {
-    const { color, sizes } = req.body;
-    if (!color)
-      return res.status(500).send({ message: "Product Color Id is required" });
-    if (!sizes)
-      return res.status(500).send({ message: "Product Size Id is required" });
-    const existingProductSize = await ProductSize.findOne({ color, sizes });
-    if (existingProductSize)
-      return res.status(500).send({ message: "Product Size already exists" });
-    const newProductSize = new ProductSize({ color, sizes });
-    await newProductSize.save();
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error);
-  }
-};
-
-export const updatePSize = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { sizes } = req.body;
-    if (!sizes)
-      return res.status(500).send({ message: "Product Size Id is required" });
-    const updatedProductSize = await ProductSize.findByIdAndUpdate(
-      id,
-      { sizes },
-      { new: true }
-    );
-    return res
-      .status(200)
-      .send({ message: "Product Size updated successfully", updatedProductSize });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error);
-  }
-};
-
 export const getAllProducts = async (req, res) => {
   try {
-    const db = mongoose.connection;
-    const allProducts = await db.collection("ProductView").find().toArray();
-    res.status(200).json(allProducts);
+    res.status(200).json(await Product.find().select("-image1 -image2"));
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
@@ -229,11 +149,53 @@ export const deleteProduct = async (req, res) => {
     const deletedProduct = await Product.findByIdAndDelete(id);
     if (!deletedProduct)
       return res.status(404).send({ message: "Product not found" });
-    return res
-      .status(200)
-      .send({ message: "Product deleted successfully" });
+    return res.status(200).send({ message: "Product deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
   }
-}
+};
+
+export const getProductImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productImage = await Product.findById(id).select(`image1`);
+    if (!productImage)
+      return res.status(404).send({ message: "Product Image not found" });
+    if (productImage.image1.data) {
+      res.set("Content-Type", productImage.image1.contentType);
+      return res.status(200).send(productImage.image1.data);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
+
+export const getProductDetailsImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productImage = await Product.findById(id).select(`image2`);
+    if (!productImage)
+      return res.status(404).send({ message: "Product Image not found" });
+    if (productImage.image2.data) {
+      res.set("Content-Type", productImage.image2.contentType);
+      return res.status(200).send(productImage.image2.data);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
+
+export const getProductById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id)
+    if (!product) return res.status(404).send({ message: "Product not found" });
+    return res.status(200).json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};

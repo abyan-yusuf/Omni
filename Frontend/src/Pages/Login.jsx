@@ -9,25 +9,22 @@ import { useAuthContext } from "../Apis/authContext";
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const [setAuth] = useAuthContext();
+  const [auth, setAuth] = useAuthContext();
   const onSubmit = async (data) => {
     try {
-      let response = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/auth/login",
-        data
-      );
+      let response = await axios.post("/api/v1/auth/login", data);
       if (response.data.message === "Logged in successfully") {
         toast.success("Successfully logged in");
-      localStorage.setItem("auth", JSON.stringify(response?.data));
-      navigate("/");
+        localStorage.setItem("auth", JSON.stringify(response?.data));
+        navigate("/");
       }
       setAuth({
         user: response?.data?.allInfo,
         token: response?.data?.token,
       });
     } catch (error) {
-        console.error(error);
-        toast.error(error.response.data.message);
+      console.error(error);
+      toast.error(error?.response?.data?.message);
     }
   };
   return (

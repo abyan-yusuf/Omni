@@ -12,7 +12,7 @@ const Home = () => {
   const getAllSlides = async () => {
     try {
       const {data} = await axios.get(
-        "https://omni-yxd5.onrender.com/api/v1/slides/all-slides"
+        "/api/v1/slides/all-slides"
       );
       setSlides(data);
     } catch (error) {
@@ -29,7 +29,7 @@ const Home = () => {
           pagination={{ clickable: true }}
           navigation={true}
           modules={[Pagination, Navigation, Autoplay]}
-          className="h-[517px] swipper"
+          className="swipper"
           loop={true}
           slidesPerView={1}
           autoplay={true}
@@ -37,9 +37,9 @@ const Home = () => {
           {slides.map((slide) => (
             <SwiperSlide key={slide._id} className="h-full">
               <img
-                src={`https://omni-yxd5.onrender.com/api/v1/slides/image/${slide._id}`}
+                src={`/api/v1/slides/image/${slide._id}`}
                 alt="slide"
-                className="w-[100%] object-cover h-full"
+                className="w-screen h-auto"
               />
             </SwiperSlide>
           ))}

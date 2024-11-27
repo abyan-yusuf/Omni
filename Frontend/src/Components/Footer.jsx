@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="min-h-[60vh] grid grid-cols-4 space-x-20 font-[forum] bg-footer">
+    <div className="h-[65vh] grid grid-cols-4 space-x-20 font-[forum] bg-footer">
       <div className="">
         <h1
-          className="font-['Roboto'] font-extrabold italic bg-white w-[60vh] text-9xl text-red-600 -rotate-90 translate-y-[7.2rem]"
+          className="font-['Roboto'] font-extrabold italic bg-white text-9xl text-red-600 h-[65vh] text-center ml-20"
           to={"/"}
+          style={{
+            writingMode: "vertical-rl",
+            transform: "scale(-1)",
+          }}
         >
           Omni
         </h1>
@@ -59,7 +63,10 @@ const Footer = () => {
           channels.
         </p>
         <div className="h-10 mt-10 space-x-6 flex">
-          <Link to={"https://www.facebook.com/p/Omni-Shoes-Ltd-100057208339435/"} target="_blank">
+          <Link
+            to={"https://www.facebook.com/p/Omni-Shoes-Ltd-100057208339435/"}
+            target="_blank"
+          >
             <img src="/facebook.png" className="h-full" />
           </Link>
           <Link>

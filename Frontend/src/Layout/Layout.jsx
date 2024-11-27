@@ -15,7 +15,7 @@ const Layout = ({ children, title, desc, keywords, author, className }) => {
       <header>
         <Navbar />
       </header>
-      <main className={"min-h-screen pb-20 " + className}>{children}</main>
+      <main className={"min-h-screen pb-20 bg-[#fdf6f0]" + className}>{children}</main>
       <footer>
         <Footer />
       </footer>

@@ -23,13 +23,13 @@ export const createSize = async (req, res) => {
 
 export const getAllSizes = async (req, res) => {
     try {
-        return res.status(200).json(await Size.find({}));
+        return res.status(200).json(await Size.find({}).select("-__v").sort({size:+1}));
     } catch (error) {
         console.error(error);
         res.status(500).send(error);
     }
 }
-
+  
 export const getSizeById = async (req, res) => {
     try {
         return res.status(200).json(await Size.findById(req.params.sid));

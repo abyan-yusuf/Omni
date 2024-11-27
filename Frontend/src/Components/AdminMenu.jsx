@@ -73,6 +73,45 @@ const AdminMenu = () => {
             Stores
           </NavLink>
         </li>
+        <li className="border-b-2">
+          <NavLink
+            to={"/dashboard/products"}
+            className={({ isActive }) =>
+              [
+                isActive ? "bg-gray-200" : "",
+                "rounded-none transition-all active:text-[black!important] active:bg-[#e5e7eb!important] hover:outline-0",
+              ].join(" ")
+            }
+          >
+            Products
+          </NavLink>
+        </li>
+        <li className="border-b-2">
+          <NavLink
+            to={"/dashboard/colors"}
+            className={({ isActive }) =>
+              [
+                isActive ? "bg-gray-200" : "",
+                "rounded-none transition-all active:text-[black!important] active:bg-[#e5e7eb!important] hover:outline-0",
+              ].join(" ")
+            }
+          >
+            Colors
+          </NavLink>
+        </li>
+        <li className="border-b-2">
+          <NavLink
+            to={"/dashboard/sizes"}
+            className={({ isActive }) =>
+              [
+                isActive ? "bg-gray-200" : "",
+                "rounded-none transition-all active:text-[black!important] active:bg-[#e5e7eb!important] hover:outline-0",
+              ].join(" ")
+            }
+          >
+            Sizes
+          </NavLink>
+        </li>
       </ul>
     </>
   );

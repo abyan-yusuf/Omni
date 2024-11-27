@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Apis/authContext";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [auth, setAuth] = useAuthContext();
-  const [cart, setCart] = useState(false); // Set default to false
   const navigate = useNavigate();
   const [navbar, setNavbar] = useState(false);
-
+console.log(auth)
   const handleLogout = () => {
     localStorage.removeItem("auth");
     setAuth({
@@ -19,7 +19,6 @@ const Navbar = () => {
     toast.success("Successfully logged out");
   };
 
-  // Handle scrolling to change navbar style
   const changeNavbar = () => {
     if (window.scrollY >= 100) {
       setNavbar(true);
@@ -28,30 +27,12 @@ const Navbar = () => {
     }
   };
 
-  // Check if user is authenticated to toggle cart visibility
-  const changeCart = () => {
-    if (auth?.token) {
-      setCart(true); // Show cart if token exists
-    } else {
-      setCart(false); // Hide cart if no token
-    }
-  };
-
   useEffect(() => {
-    // Add event listener for scroll
     window.addEventListener("scroll", changeNavbar);
-
-    // Clean up scroll event listener on component unmount
     return () => {
       window.removeEventListener("scroll", changeNavbar);
     };
   }, []);
-
-  useEffect(() => {
-    if (auth?.token) {
-      changeCart();
-    }
-  }, [auth?.token]);
 
   return (
     <nav
@@ -85,7 +66,7 @@ const Navbar = () => {
             />
             <img src="/Search.svg" className="h-6" />
           </div>
-          {cart ? (
+          {auth?.token ? (
             <>
               <div className="dropdown dropdown-end">
                 <div
@@ -99,7 +80,7 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow font"
                 >
                   <li>
                     <NavLink

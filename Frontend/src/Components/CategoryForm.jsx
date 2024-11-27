@@ -1,5 +1,3 @@
-import React from "react";
-
 const CategoryForm = ({
   handleSubmit,
   value,
@@ -31,7 +29,7 @@ const CategoryForm = ({
         onChange={(e) => setImage(e.target.files[0])}
         className="file-input file-input-bordered w-full max-w-xs"
       />
-      <img src={image && URL.createObjectURL(image) || id &&`https://omni-yxd5.onrender.com/api/v1/categories/image/${id}`} className="h-auto w-52" />
+      <img src={image && URL.createObjectURL(image) || id &&`/api/v1/categories/image/${id}`} className="h-auto w-52" />
       <div className="space-x-2">
         <button type="submit" className="btn btn-primary w-20">
           Submit

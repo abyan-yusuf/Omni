@@ -20,7 +20,7 @@ const Categories = () => {
 
   const getAllCategories = async () => {
     const { data } = await axios.get(
-      "https://omni-yxd5.onrender.com/api/v1/categories/all-categories"
+      "/api/v1/categories/all-categories"
     );
     setCategories(data);
   };
@@ -32,7 +32,7 @@ const Categories = () => {
       categoryInfo.append("name", name);
       categoryInfo.append("image", image);
       const { data } = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/categories/create",
+        "/api/v1/categories/create",
         categoryInfo,
         { headers: { Authorization: auth?.token } }
       );
@@ -50,16 +50,15 @@ const Categories = () => {
   };
   const handleDelete = async (id) => {
     try {
-      let answer = prompt(
-        "Are you sure you want to delete this category?",
-        "Yes"
+      let answer = window.confirm(
+        "Are you sure you want to delete this category?"
       );
-      if (answer !== "Yes") {
+      if (!answer) {
         return;
       }
       if (id.length > 2) {
         const { data } = await axios.delete(
-          `https://omni-yxd5.onrender.com/api/v1/categories/delete/${id}`,
+          `/api/v1/categories/delete/${id}`,
           { headers: { Authorization: auth.token } }
         );
         if (data) {
@@ -84,7 +83,7 @@ const Categories = () => {
     categoryInfo.append("image", updatedImage);
     try {
       const { data } = await axios.put(
-        `https://omni-yxd5.onrender.com/api/v1/categories/update/${selected._id}`,
+        `/api/v1/categories/update/${selected._id}`,
         categoryInfo,
         { headers: { Authorization: auth.token } }
       );
@@ -128,7 +127,7 @@ const Categories = () => {
                     <th>{i + 1}</th>
                     <td>
                       <img
-                        src={`https://omni-yxd5.onrender.com/api/v1/categories/image/${category._id}`}
+                        src={`/api/v1/categories/image/${category._id}`}
                         className="h-20 w-auto"
                       />
                     </td>

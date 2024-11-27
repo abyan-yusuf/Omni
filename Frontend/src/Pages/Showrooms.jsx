@@ -21,7 +21,7 @@ const Showrooms = () => {
   const findNeabyShowrooms = async (latitude, longitude) => {
     try {
       const { data } = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/showrooms/nearby",
+        "/api/v1/showrooms/nearby",
         {
           latitude,
           longitude,
@@ -49,38 +49,17 @@ const Showrooms = () => {
   const getAllShowrooms = async () => {
     try {
       let response = await axios.get(
-        "https://omni-yxd5.onrender.com/api/v1/showrooms/all-showrooms"
+        "/api/v1/showrooms/all-showrooms"
       );
       setShowrooms(response.data);
     } catch (error) {
       console.error(error);
     }
   };
+
   useEffect(() => {
     getAllShowrooms();
   }, []);
-  // const getShowroomsByDivision = async () => {
-  // try {
-  //   const { data } = await axios.post(
-  //     "https://omni-yxd5.onrender.com/api/v1/showrooms/filtered-showrooms",
-  //     {
-  //       division: getDivisions().filter((d) => selectedDivison === d.id)[0]
-  //             .name,
-  //         district: getDistrictsByDivision(selectedDivison).filter(
-  //           (d) => selectedDistrict === d.id
-  //         )[0]?.name,
-  //         area: selectedArea,
-  //     }
-  //     );
-  //     setShowrooms(data);
-  // } catch (error) {
-  //   console.error(error);
-  // }
-  // };
-  // useEffect(() => {
-  //     if(selectedDivison)
-  //   getShowroomsByDivision();
-  // }, [selectedDivison, selectedDistrict, selectedArea]);
   const handleClearFilters = () => {
     setSelectedDivision("");
     setSelectedDistrict("");

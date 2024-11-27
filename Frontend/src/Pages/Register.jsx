@@ -12,7 +12,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-          "https://omni-yxd5.onrender.com/api/v1/auth/register",
+          "/api/v1/auth/register",
           data
         );
       console.log(response)

@@ -30,7 +30,7 @@ const StoreForm = ({
   setLongitude,
   cancelButton,
   handleCancel,
-  className,
+  className, 
 }) => {
   const [divisions, setDivisions] = useState([]);
   const [districts, setDistricts] = useState([]);

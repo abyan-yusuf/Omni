@@ -1,44 +1,30 @@
 import { Router } from "express";
 import {
-  createPColor,
-  createPImage,
   createProduct,
-  createPSize,
-  deletePColor,
-  deletePImage,
   deleteProduct,
   getAllProducts,
+  getProductById,
+  getProductDetailsImage,
+  getProductImage,
   updateProduct,
-  updatePSize,
 } from "../controllers/Product.js";
 import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
 import ExpressFormidable from "express-formidable";
 
 const router = Router();
 
-router.post("/create", requireSignIn, isAdmin, createProduct);
+router.post("/create", requireSignIn, isAdmin, ExpressFormidable(), createProduct);
 
-router.put("/update/:id", requireSignIn, isAdmin, updateProduct);
-
-router.post("/create-color", requireSignIn, isAdmin, createPColor);
-
-router.post(
-  "/create-image",
-  requireSignIn,
-  isAdmin,
-  ExpressFormidable(),
-  createPImage);
-
-router.post("/create-size", requireSignIn, isAdmin, createPSize);
+router.put("/update/:id", requireSignIn, isAdmin,ExpressFormidable() , updateProduct);
 
 router.get("/all", getAllProducts);
 
-router.delete("/delete-color/:id", requireSignIn, isAdmin, deletePColor);
+router.delete("/delete/:id", requireSignIn, isAdmin, deleteProduct);
 
-router.delete("/delete/image/:id", requireSignIn, isAdmin, deletePImage);
+router.get("/image/:id", getProductImage)
 
-router.put("/update/size/:id", requireSignIn, isAdmin, updatePSize);
+router.get("/image/details/:id", getProductDetailsImage)
 
-router.delete("/delete:id", requireSignIn, isAdmin, deleteProduct);
+router.get("/single/:id", getProductById);
 
 export default router;

@@ -12,7 +12,7 @@ const AdminRoute = () => {
     useEffect(() => {
       const authCheck = async (token) => {
         const res = await axios.get(
-          "https://omni-yxd5.onrender.com/api/v1/auth/admin-auth",
+          "/api/v1/auth/admin-auth",
           {
             headers: {
               Authorization: token,
@@ -33,11 +33,7 @@ const AdminRoute = () => {
 
     return ok ? <Outlet /> : <Loader />;
   } catch (error) {
-    if (error.response.data.name === "TokenExpiredError") {
-      setJe(true);
-      setAuth({});
-      return localStorage.removeItem("auth");
-    }
+    console.log(error);
   }
 };
 

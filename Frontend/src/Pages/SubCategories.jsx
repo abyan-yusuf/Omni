@@ -24,7 +24,7 @@ const SubCategories = () => {
 
   const getAllSubCategories = async () => {
     const { data } = await axios.get(
-      "https://omni-yxd5.onrender.com/api/v1/sub-categories/all-sub-categories"
+      "/api/v1/sub-categories/all-sub-categories"
     );
     console.log(data);
     setSubCategories(data);
@@ -37,7 +37,7 @@ const SubCategories = () => {
       categoryInfo.append("image", image);
       categoryInfo.append("parentCat", parentCat);
       const { data } = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/sub-categories/create",
+        "/api/v1/sub-categories/create",
         categoryInfo,
         { headers: { Authorization: auth?.token } }
       );
@@ -58,15 +58,14 @@ const SubCategories = () => {
 
   const handleDelete = async (id) => {
     try {
-      let answer = prompt(
-        "Are you sure you want to delete this category?",
-        "Yes"
+      let answer = window.confirm(
+        "Are you sure you want to delete this category?"
       );
-      if (answer !== "Yes") {
+      if (!answer) {
         return;
       }
       const { data } = await axios.delete(
-        `https://omni-yxd5.onrender.com/api/v1/sub-categories/delete/${id}`,
+        `/api/v1/sub-categories/delete/${id}`,
         { headers: { Authorization: auth.token } }
       );
       if (data) {
@@ -91,7 +90,7 @@ const SubCategories = () => {
       categoryInfo.append("image", updatedImage);
       categoryInfo.append("parentCat", updatedParentCat);
       const { data } = await axios.put(
-        `https://omni-yxd5.onrender.com/api/v1/sub-categories/update/${selected}`,
+        `/api/v1/sub-categories/update/${selected}`,
         categoryInfo,
         { headers: { Authorization: auth.token } }
       );
@@ -136,7 +135,7 @@ const SubCategories = () => {
                     <th>{i + 1}</th>
                     <td>
                       <img
-                        src={`https://omni-yxd5.onrender.com/api/v1/sub-categories/image/${subCategory._id}`}
+                        src={`/api/v1/sub-categories/image/${subCategory._id}`}
                         className="h-20 w-auto"
                       />
                     </td>
