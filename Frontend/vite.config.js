@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api/v1": {
-        target: "https://https://omni-yxd5.onrender.com",
+        target: "https://omni-yxd5.onrender.com",
         changeOrigin: true,
       },
     },
