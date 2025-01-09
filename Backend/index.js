@@ -38,7 +38,6 @@ app.get("/", (req, res) => {
 app.listen(port, async () => {
   console.log(`Your server is running on port ${port}`.bgGreen.cyan.bold);
   await connectDB();
-  await createProductView();
 });
 
 export const handler = serverless(app);

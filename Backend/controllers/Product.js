@@ -9,8 +9,6 @@ export const createProduct = async (req, res) => {
       description,
       originalPrice,
       discountPrice,
-      bestSeller,
-      featured,
       color,
       sizes,
       category,

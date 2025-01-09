@@ -4,6 +4,7 @@ import {
   deleteSubCategory,
   getAllSubCategories,
   getImageById,
+  getSubCategoriesByParentCat,
   getSubCategoryById,
   updateSubCategory,
 } from "../controllers/SubCategory.js";
@@ -31,5 +32,6 @@ router.delete("/delete/:subid", requireSignIn, isAdmin, deleteSubCategory);
 
 router.get("/image/:subid", getImageById);
 
+router.get("/all/:parentCat", getSubCategoriesByParentCat);
 
 export default router;

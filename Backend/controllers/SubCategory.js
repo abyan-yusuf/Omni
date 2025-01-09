@@ -1,10 +1,25 @@
+import Product from "../models/Product.js"
 import SubCategory from "../models/SubCategory.js"
 import fs from "fs"
 
 export const getAllSubCategories = async (req, res) => { 
     try {
-        const allSubCategories = await SubCategory.find({}).select("-image").populate("parentCat")
-        res.status(200).json(allSubCategories)
+        const subCategories = await SubCategory.find({})
+          .select("-image")
+          .populate("parentCat");
+
+        const subCategoriesWithCounts = await Promise.all(
+          subCategories.map(async (subCategory) => {
+            const productCount = await Product.countDocuments({
+              subCategory: subCategory._id,
+            });
+            return {
+              ...subCategory.toObject(),
+              productCount,
+            };
+          })
+        );
+        res.status(200).json(subCategoriesWithCounts)
     } catch (error) {
         console.error(error)
         res.status(500).send(error)
@@ -106,3 +121,29 @@ export const getImageById = async (req, res) => {
         res.status(500).send(error)
     }
 }
+
+export const getSubCategoriesByParentCat = async (req, res) => {
+    try {
+        const { parentCat } = req.params
+        const subCategories = await SubCategory.find({ parentCat })
+          .select("-image")
+          .populate("parentCat");
+
+        const subCategoriesWithCounts = await Promise.all(
+          subCategories.map(async (subCategory) => {
+            const productCount = await Product.countDocuments({
+              subCategory: subCategory._id,
+            });
+            return {
+              ...subCategory.toObject(),
+              productCount,
+            };
+          })
+        );
+        res.status(200).json(subCategoriesWithCounts)
+    } catch (error) {
+        console.error(error)
+        res.status(500).send(error)
+    }
+}
+
