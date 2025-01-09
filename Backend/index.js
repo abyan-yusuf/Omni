@@ -11,8 +11,6 @@ import slideRouter from "./routes/Slides.js";
 import productRouter from "./routes/Product.js";
 import colors from "colors";
 import connectDB from "./config/db.js";
-import { createProductView } from "./config/createProductView.js";
-import serverless from "serverless-http";
 
 dotenv.config();
 
@@ -39,5 +37,3 @@ app.listen(port, async () => {
   console.log(`Your server is running on port ${port}`.bgGreen.cyan.bold);
   await connectDB();
 });
-
-export const handler = serverless(app);
