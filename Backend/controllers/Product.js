@@ -197,3 +197,17 @@ export const getProductById = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+export const getLatestPorductsByCat = async (req, res) => {
+  try {
+    const { catid } = req.params;
+    const products = await Product.find({ category: catid })
+      .sort({ createdAt: -1 })
+      .limit(8).
+      select("-image1 -image2");
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error)
+    res.status(500).send(error)
+  }
+}

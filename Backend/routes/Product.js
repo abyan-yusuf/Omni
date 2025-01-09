@@ -3,6 +3,7 @@ import {
   createProduct,
   deleteProduct,
   getAllProducts,
+  getLatestPorductsByCat,
   getProductById,
   getProductDetailsImage,
   getProductImage,
@@ -26,5 +27,7 @@ router.get("/image/:id", getProductImage)
 router.get("/image/details/:id", getProductDetailsImage)
 
 router.get("/single/:id", getProductById);
+
+router.get("/latest/:catid", getLatestPorductsByCat);
 
 export default router;
