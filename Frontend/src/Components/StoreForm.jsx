@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import MapSelector from "./MapSelector";
 import {
-  getAreasByDistrict,
+  getThanasByDistrict,
   getDistrictsByDivision,
   getDivisions,
-} from "bd-geodata";
+} from "../data/index.js";
 
 const StoreForm = ({
   handleSubmit,
@@ -22,37 +22,34 @@ const StoreForm = ({
   setDivision,
   district,
   setDistrict,
-  area,
-  setArea,
+  thana,
+  setThana,
   latitude,
   setLatitude,
   longitude,
   setLongitude,
   cancelButton,
   handleCancel,
-  className, 
+  className,
 }) => {
   const [divisions, setDivisions] = useState([]);
   const [districts, setDistricts] = useState([]);
-  const [areas, setAreas] = useState([]);
+  const [thanas, setThanas] = useState([]);
+  console.log(division, district, thana);
   const getData = async () => {
-    setDivisions(getDivisions().sort((a, b) => a.name.localeCompare(b.name)));
+    setDivisions(getDivisions());
   };
 
-  const getDistricts = async (division_id) => {
+  const getDistricts = async (division) => {
     try {
-      setDistricts(
-        getDistrictsByDivision(division_id).sort((a, b) =>
-          a.name.localeCompare(b.name)
-        )
-      );
+      setDistricts(getDistrictsByDivision(division));
     } catch (error) {
       console.error(error);
     }
   };
-  const getAreas = async (district_id) => {
+  const getThanas = async (district) => {
     try {
-      setAreas(getAreasByDistrict(district_id).sort());
+      setThanas(getThanasByDistrict(district));
     } catch (error) {
       console.error(error);
     }
@@ -61,13 +58,12 @@ const StoreForm = ({
   useEffect(() => {
     getData();
   }, []);
+
   useEffect(() => {
-    if (division) {
-      getDistricts(division);
-    }
+    if (division) getDistricts(division);
   }, [division]);
   useEffect(() => {
-    if (district) getAreas(district);
+    if (district) getThanas(district);
   }, [district]);
 
   return (
@@ -104,7 +100,7 @@ const StoreForm = ({
         required
         value={division ? division : " "}
         onChange={(e) => {
-          getDistricts(`${e.target.value}`);
+          getDistricts(e.target.value);
           setDivision(e.target.value);
         }}
       >
@@ -112,8 +108,8 @@ const StoreForm = ({
           Select Division
         </option>
         {divisions.map((division) => (
-          <option key={division?.id} value={division?.id}>
-            {division?.name}({division?.bn_name})
+          <option key={division} value={division}>
+            {division}
           </option>
         ))}
       </select>
@@ -122,7 +118,6 @@ const StoreForm = ({
         required
         value={district ? district : " "}
         onChange={(e) => {
-          getAreas(e.target.value);
           setDistrict(e.target.value);
         }}
       >
@@ -130,9 +125,9 @@ const StoreForm = ({
           Select District
         </option>
         {districts.length > 0 ? (
-          districts?.map((district) => (
-            <option key={district?.id} value={district?.id}>
-              {district?.name}({district?.bn_name})
+          districts?.map((d) => (
+            <option key={d.district} value={d.district}>
+              {d.district}
             </option>
           ))
         ) : (
@@ -141,17 +136,17 @@ const StoreForm = ({
       </select>
       <select
         className="select select-bordered w-96"
-        value={area ? area : " "}
-        onChange={(e) => setArea(e.target.value)}
+        value={thana ? thana : " "}
+        onChange={(e) => setThana(e.target.value)}
         required
       >
         <option disabled selected value={" "}>
-          Select Area
+          Select Thana
         </option>
-        {areas?.length > 0 ? (
-          areas?.map((area, i) => (
-            <option key={i + 1} value={area}>
-              {area}
+        {thanas?.length > 0 ? (
+          thanas.map((t) => (
+            <option key={t.thana} value={t.thana}>
+              {t.thana}
             </option>
           ))
         ) : (

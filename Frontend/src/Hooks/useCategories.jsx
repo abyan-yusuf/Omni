@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 const useCategories = () => {
   const [categories, setCategories] = useState([]);
 
-   const getCategories = async () => {
+  const getCategories = async () => {
     const { data } = await axios.get(
-      "/api/v1/categories/all-categories"
+      "https://omni-yxd5.onrender.com/api/v1/categories/all-categories"
     );
     setCategories(data);
   };

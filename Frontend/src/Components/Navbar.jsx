@@ -7,7 +7,7 @@ const Navbar = () => {
   const [auth, setAuth] = useAuthContext();
   const navigate = useNavigate();
   const [navbar, setNavbar] = useState(false);
-console.log(auth)
+  console.log(auth);
   const handleLogout = () => {
     localStorage.removeItem("auth");
     setAuth({

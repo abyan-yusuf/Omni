@@ -1,25 +1,25 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const useColors = () => {
-    const [colors, setColors] = useState([]);
+  const [colors, setColors] = useState([]);
 
-    useEffect(() => {
-        const getColors = async () => {
-            try {
-                const { data } = await axios.get(
-                    "/api/v1/colors/all-colors"
-                );
-                setColors(data);
-            } catch (error) {
-                toast.error(error);
-            }
-        };
-        getColors();
-    }, []);
+  useEffect(() => {
+    const getColors = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://omni-yxd5.onrender.com/api/v1/colors/all-colors"
+        );
+        setColors(data);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    getColors();
+  }, []);
 
-    return colors
-}
+  return colors;
+};
 
-export default useColors
+export default useColors;

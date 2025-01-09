@@ -6,15 +6,15 @@ const useSizes = () => {
 
   const getSizes = async () => {
     const { data } = await axios.get(
-      "/api/v1/sizes/all-sizes"
+      "https://omni-yxd5.onrender.com/api/v1/sizes/all-sizes"
     );
     setSizes(data);
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     getSizes();
   }, []);
-  return sizes
-}
+  return sizes;
+};
 
-export default useSizes
+export default useSizes;

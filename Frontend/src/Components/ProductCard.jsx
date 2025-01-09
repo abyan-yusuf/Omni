@@ -7,7 +7,9 @@ const ProductCard = ({ name, price, category, discount, id, admin }) => {
 
   useEffect(() => {
     axios
-      .get(`/api/v1/categories/single/${category}`)
+      .get(
+        `https://omni-yxd5.onrender.com/api/v1/categories/single/${category}`
+      )
       .then((res) => {
         setCategoryName(res.data.name);
       });
@@ -19,7 +21,7 @@ const ProductCard = ({ name, price, category, discount, id, admin }) => {
     >
       <figure className="h-[225px]">
         <img
-          src={`/api/v1/products/image/${id}`}
+          src={`https://omni-yxd5.onrender.com/api/v1/products/image/${id}`}
           alt="Shoes"
           className="h-auto w-full"
         />
@@ -31,11 +33,19 @@ const ProductCard = ({ name, price, category, discount, id, admin }) => {
         <p className="text-center">For {categoryName.slice(0, -1)}</p>
         <p className="font-semibold text-lg flex flex-wrap items-start text-center">
           {" "}
-          <p className={discount !== price ? "line-through text-stone-500 " : "text-red-700 " + "whitespace-nowrap"}>
+          <p
+            className={
+              discount !== price
+                ? "line-through text-stone-500 "
+                : "text-red-700 " + "whitespace-nowrap"
+            }
+          >
             Tk. {price}
           </p>
           {discount !== price && (
-            <p className="ml-2 text-red-700 whitespace-nowrap">Tk. {discount}</p>
+            <p className="ml-2 text-red-700 whitespace-nowrap">
+              Tk. {discount}
+            </p>
           )}
         </p>
         <div className="card-actions justify-end"></div>

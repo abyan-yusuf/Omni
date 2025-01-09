@@ -6,7 +6,7 @@ import { Modal } from "antd";
 import { useAuthContext } from "../Apis/authContext";
 import { toast } from "react-toastify";
 import StoreForm from "../Components/StoreForm";
-import { getDistrictsByDivision, getDivisions } from "bd-geodata";
+import { getDistrictsByDivision, getDivisions } from "../data/index.js";
 
 const AdminStores = () => {
   const [stores, setStores] = useState([]);
@@ -19,7 +19,7 @@ const AdminStores = () => {
   const [updatedStreet, setUpdatedStreet] = useState("");
   const [updatedDivision, setUpdatedDivision] = useState("");
   const [updatedDistrict, setUpdatedDistrict] = useState("");
-  const [updatedArea, setUpdatedArea] = useState("");
+  const [updatedThana, setUpdatedThana] = useState("");
   const [updatedLatitude, setUpdatedLatitude] = useState("");
   const [updatedLongitude, setUpdatedLongitude] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,13 +31,13 @@ const AdminStores = () => {
   const [street, setStreet] = useState("");
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
-  const [area, setArea] = useState("");
+  const [thana, setThana] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
   const getAllStores = async () => {
     const { data } = await axios.get(
-      "/api/v1/showrooms/all-showrooms"
+      "https://omni-yxd5.onrender.com/api/v1/showrooms/all-showrooms"
     );
     setStores(data);
   };
@@ -45,21 +45,17 @@ const AdminStores = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const divisionName = getDivisions().filter((d) => division === d.id);
-      const districtName = getDistrictsByDivision(division).filter(
-        (d) => district === d.id
-      );
       const { data } = await axios.post(
-        "/api/v1/showrooms/create",
+        "https://omni-yxd5.onrender.com/api/v1/showrooms/create",
         {
           name,
           code,
           email,
           phone,
           street,
-          division: divisionName[0].name,
-          district: districtName[0].name,
-          area,
+          division,
+          district,
+          area: thana,
           latitude,
           longitude,
         },
@@ -95,7 +91,7 @@ const AdminStores = () => {
         return;
       } else if (id.length > 2) {
         const { data } = await axios.delete(
-          `/api/v1/showrooms/delete/${id}`,
+          `https://omni-yxd5.onrender.com/api/v1/showrooms/delete/${id}`,
           { headers: { Authorization: auth.token } }
         );
         if (data) {
@@ -117,23 +113,17 @@ const AdminStores = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const divisionName = getDivisions().filter(
-        (d) => updatedDivision === d.id
-      );
-      const districtName = getDistrictsByDivision(updatedDivision).filter(
-        (d) => updatedDistrict === d.id
-      );
       const { data } = await axios.put(
-        `/api/v1/showrooms/update/${selected._id}`,
+        `https://omni-yxd5.onrender.com/api/v1/showrooms/update/${selected._id}`,
         {
           name: updatedName,
           code: updatedCode,
           email: updatedEmail,
           phone: updatedPhone,
           street: updatedStreet,
-          division: divisionName[0].name,
-          district: districtName[0].name,
-          area: updatedArea,
+          division: updatedDivision,
+          district: updatedDistrict,
+          area: updatedThana,
           latitude: updatedLatitude,
           longitude: updatedLongitude,
         },
@@ -214,23 +204,9 @@ const AdminStores = () => {
                           setUpdatedEmail(store?.contact?.email);
                           setUpdatedPhone(store?.contact?.phone);
                           setUpdatedStreet(store?.address?.street);
-                          setUpdatedDivision(
-                            getDivisions().filter((division) => {
-                              return division.name === store?.address?.division;
-                            })[0].id
-                          );
-                          setUpdatedDistrict(
-                            getDistrictsByDivision(
-                              getDivisions().filter((division) => {
-                                return (
-                                  division.name === store?.address?.division
-                                );
-                              })[0].id
-                            ).filter((district) => {
-                              return district.name === store?.address?.district;
-                            })[0].id
-                          );
-                          setUpdatedArea(store?.address?.area);
+                          setUpdatedDivision(store?.address?.division);
+                          setUpdatedDistrict(store?.address?.district);
+                          setUpdatedThana(store?.address?.area);
                           setUpdatedLatitude(store?.location?.coordinates[1]);
                           setUpdatedLongitude(store?.location?.coordinates[0]);
                         }}
@@ -269,8 +245,8 @@ const AdminStores = () => {
               setDivision={setDivision}
               district={district}
               setDistrict={setDistrict}
-              area={area}
-              setArea={setArea}
+              thana={thana}
+              setThana={setThana}
               latitude={latitude}
               setLatitude={setLatitude}
               longitude={longitude}
@@ -308,8 +284,8 @@ const AdminStores = () => {
               setDivision={setUpdatedDivision}
               district={updatedDistrict}
               setDistrict={setUpdatedDistrict}
-              thana={updatedArea}
-              setThana={setUpdatedArea}
+              thana={updatedThana}
+              setThana={setUpdatedThana}
               latitude={updatedLatitude}
               setLatitude={setUpdatedLatitude}
               longitude={updatedLongitude}

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import ProductForm from "../Components/ProductForm";
-import { useAuthContext } from "../Apis/authContext";
+import { useAuthContext } from "../Apis/authContext.jsx";
 
 const AdminProductDetails = () => {
   const navigate = useNavigate();
@@ -19,13 +19,17 @@ const AdminProductDetails = () => {
   const [subCategory, setSubCategory] = useState();
   const [sizes, setSizes] = useState([]);
   const [color, setColor] = useState("");
-  const [image1, setImage1] = useState();
-  const [image2, setImage2] = useState();
+  const [image1, setImage1] = useState(null);
+  const [image2, setImage2] = useState(null);
+  const [featured, setFeatured] = useState(false);
+  const [bestSeller, setBestSeller] = useState(false);
   const [product, setProduct] = useState({});
   const [auth] = useAuthContext();
   const getProduct = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/products/single/${id}`);
+      const { data } = await axios.get(
+        `https://omni-yxd5.onrender.com/api/v1/products/single/${id}`
+      );
       setName(data.name);
       setCode(data.code);
       setDescription(data.description);
@@ -34,8 +38,9 @@ const AdminProductDetails = () => {
       setCategory(data.category);
       setSubCategory(data.subCategory);
       setColor(data.color);
+      setFeatured(data.featured);
+      setBestSeller(data.bestSeller);
       setProduct(data);
-      console.log(product);
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -53,9 +58,12 @@ const AdminProductDetails = () => {
       if (!answer) {
         return;
       }
-      const { data } = await axios.delete(`/api/v1/products/delete/${id}`, {
-        headers: { Authorization: auth?.token },
-      });
+      const { data } = await axios.delete(
+        `https://omni-yxd5.onrender.com/api/v1/products/delete/${id}`,
+        {
+          headers: { Authorization: auth?.token },
+        }
+      );
       if (data) toast.success(data?.message);
       navigate("/dashboard/products");
     } catch (error) {
@@ -81,8 +89,10 @@ const AdminProductDetails = () => {
       productInfo.append("color", color);
       if (image1) productInfo.append("image1", image1 || product.image1);
       if (image2) productInfo.append("image2", image2 || product.image2);
+      productInfo.append("featured", featured);
+      productInfo.append("bestSeller", bestSeller);
       const { data } = await axios.put(
-        `/api/v1/products/update/${id}`,
+        `https://omni-yxd5.onrender.com/api/v1/products/update/${id}`,
         productInfo,
         {
           headers: {
@@ -101,7 +111,9 @@ const AdminProductDetails = () => {
 
   const getSizes = async () => {
     if (product.sizes) {
-      const { data } = await axios.get("/api/v1/sizes/all-sizes");
+      const { data } = await axios.get(
+        "https://omni-yxd5.onrender.com/api/v1/sizes/all-sizes"
+      );
 
       setSizes(
         data.filter(
@@ -154,6 +166,10 @@ const AdminProductDetails = () => {
                 setSizes={setSizes}
                 image2={image2}
                 setImage2={setImage2}
+                featured={featured}
+                setFeatured={setFeatured}
+                bestSeller={bestSeller}
+                setBestSeller={setBestSeller}
                 id={id}
                 cancelButton={false}
               />

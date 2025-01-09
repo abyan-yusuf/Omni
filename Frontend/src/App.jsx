@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
@@ -18,8 +18,11 @@ import AdminColors from "./Pages/AdminColors";
 import AdminSizes from "./Pages/AdminSizes";
 import AdminProducts from "./Pages/AdminProducts";
 import AdminProductDetails from "./Pages/AdminProductDetails";
+import { getDivisions } from "./data";
 
 const App = () => {
+  useEffect(() => {console.log(getDivisions())}, []);
+
   return (
     <>
       <ToastContainer position="bottom-left" />
@@ -37,7 +40,10 @@ const App = () => {
           <Route path="colors" element={<AdminColors />} />
           <Route path="sizes" element={<AdminSizes />} />
           <Route path="products" element={<AdminProducts />} />
-          <Route path="products/details/:id" element={<AdminProductDetails />} />
+          <Route
+            path="products/details/:id"
+            element={<AdminProductDetails />}
+          />
         </Route>
         <Route path="/showrooms" element={<Showrooms />} />
         <Route path="/showrooms/details/:id" element={<ShowroomDetails />} />

@@ -2,54 +2,59 @@ import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import axios from "axios";
 import {
-  getAreasByDistrict,
+  getThanasByDistrict,
   getDistrictsByDivision,
   getDivisions,
-} from "../index.jsx";
+} from "../data/index.js";
 import { Link } from "react-router-dom";
 
 const Showrooms = () => {
   const [showrooms, setShowrooms] = useState([]);
   const [selectedDivison, setSelectedDivision] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [selectedArea, setSelectedArea] = useState("");
+  const [selectedThana, setThanaArea] = useState("");
   const [areas, setAreas] = useState([]);
   console.log(selectedArea);
   console.log(selectedDistrict);
   console.log(selectedDivison);
-  
+
   const findNeabyShowrooms = async (latitude, longitude) => {
     try {
       const { data } = await axios.post(
-        "/api/v1/showrooms/nearby",
+        "https://omni-yxd5.onrender.com/api/v1/showrooms/nearby",
         {
           latitude,
           longitude,
         }
-      )
-      setShowrooms(data)
+      );
+      setShowrooms(data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
-  const getUserLocation= async () => {
+  const getUserLocation = async () => {
     try {
-      if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          findNeabyShowrooms(position.coords.latitude, position.coords.longitude)
-        },
-        (error) => console.log(error))
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            findNeabyShowrooms(
+              position.coords.latitude,
+              position.coords.longitude
+            );
+          },
+          (error) => console.log(error)
+        );
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const getAllShowrooms = async () => {
     try {
       let response = await axios.get(
-        "/api/v1/showrooms/all-showrooms"
+        "https://omni-yxd5.onrender.com/api/v1/showrooms/all-showrooms"
       );
       setShowrooms(response.data);
     } catch (error) {
@@ -65,7 +70,7 @@ const Showrooms = () => {
     setSelectedDistrict("");
     setAreas([]);
     setSelectedArea("");
-  }
+  };
   return (
     <Layout className="px-32 pt-16 font-[forum!important]">
       <h1
@@ -142,12 +147,17 @@ const Showrooms = () => {
           </select>
         </div>
         <div className="basis-1/4 flex items-end">
-          <button className="text-white font-[Roboto] text-xl bg-red-600 px-6 py-2 rounded-xl" onClick={getUserLocation}>
+          <button
+            className="text-white font-[Roboto] text-xl bg-red-600 px-6 py-2 rounded-xl"
+            onClick={getUserLocation}
+          >
             Find Near Me
           </button>
         </div>
       </div>
-      <button type="button" className="" onClick={handleClearFilters}>Clear Filters</button>
+      <button type="button" className="" onClick={handleClearFilters}>
+        Clear Filters
+      </button>
       <table className="min-w-full divide-y divide-gray-200 mt-10">
         <thead>
           <tr>
@@ -190,7 +200,10 @@ const Showrooms = () => {
               else if (selectedDistrict)
                 return showroom.address.district === selectedDistrict;
               else if (selectedDivison)
-                return showroom.address.division === getDivisions().filter((d) => selectedDivison === d.id)[0].name;
+                return (
+                  showroom.address.division ===
+                  getDivisions().filter((d) => selectedDivison === d.id)[0].name
+                );
               else return true;
             })
             .map((showroom) => (

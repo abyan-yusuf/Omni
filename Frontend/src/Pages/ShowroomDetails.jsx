@@ -5,12 +5,15 @@ import axios from "axios";
 
 const ShowroomDetails = () => {
   const { id } = useParams();
-    const [showroom, setShowroom] = useState({});
-    const [userCoordinates, setUserCoordinates] = useState({latitude: "", longitude: ""});
+  const [showroom, setShowroom] = useState({});
+  const [userCoordinates, setUserCoordinates] = useState({
+    latitude: "",
+    longitude: "",
+  });
   const getShowroom = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/showrooms/single/${id}`
+        `https://omni-yxd5.onrender.com/api/v1/showrooms/single/${id}`
       );
       setShowroom(data);
     } catch (error) {
@@ -20,20 +23,20 @@ const ShowroomDetails = () => {
   useEffect(() => {
     getShowroom();
   });
-    useEffect(() => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setUserCoordinates({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            });
-            console.log(position)
-          },
-          (error) => console.log(error)
-        );
-      }  
-    }, [])
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserCoordinates({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          console.log(position);
+        },
+        (error) => console.log(error)
+      );
+    }
+  }, []);
   return (
     <Layout>
       <h1 className="text-4xl text-center font-[Roboto] font-medium my-20">
@@ -41,9 +44,15 @@ const ShowroomDetails = () => {
       </h1>
       <div className="mx-40 space-x-10 flex justify-between">
         <div className="basis-1/2 border-2 border-[#27] px-20 py-10">
-          <p className="text-2xl font-[Roboto] font-light">Code: {showroom.code }</p>
-          <p className="font-[Roboto] text-2xl font-light mt-5
-          ">ADDRESS:</p>
+          <p className="text-2xl font-[Roboto] font-light">
+            Code: {showroom.code}
+          </p>
+          <p
+            className="font-[Roboto] text-2xl font-light mt-5
+          "
+          >
+            ADDRESS:
+          </p>
           <p className="mt-3 text-lg font-[Roboto] font-light">
             Division: {showroom.address?.division}
           </p>
@@ -72,13 +81,15 @@ const ShowroomDetails = () => {
             allowFullScreen
             className="w-full h-80"
           ></iframe>
-          {userCoordinates.latitude && userCoordinates.longitude && <a
-                      href={`https://www.google.com/maps/dir/?api=1&origin=${userCoordinates.latitude},${userCoordinates.longitude}&destination=${showroom.location?.coordinates[1]},${showroom.location?.coordinates[0]}`}
-                      target="_blank"
-            class="flex items-center gap-2 px-5 py-2 font-bold text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-md shadow-lg transform transition hover:from-purple-500 hover:to-blue-500 hover:-translate-y-0.5 hover:shadow-xl w-40"
-          >
-            Directions <img src="/direction.svg" />
-          </a>}
+          {userCoordinates.latitude && userCoordinates.longitude && (
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&origin=${userCoordinates.latitude},${userCoordinates.longitude}&destination=${showroom.location?.coordinates[1]},${showroom.location?.coordinates[0]}`}
+              target="_blank"
+              class="flex items-center gap-2 px-5 py-2 font-bold text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-md shadow-lg transform transition hover:from-purple-500 hover:to-blue-500 hover:-translate-y-0.5 hover:shadow-xl w-40"
+            >
+              Directions <img src="/direction.svg" />
+            </a>
+          )}
         </div>
       </div>
     </Layout>

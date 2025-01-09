@@ -31,6 +31,10 @@ const ProductForm = ({
   setSizes,
   image2,
   setImage2,
+  featured,
+  setFeatured,
+  bestSeller,
+  setBestSeller,
   id,
   cancelButton,
 }) => {
@@ -43,9 +47,11 @@ const ProductForm = ({
 
   const getImageUrl = () => {
     return image1
-      ? setUrl(URL.createObjectURL(image1))
+      ? setUrl(
+          URL.createObjectURL(image1)
+        )
       : id
-      ? setUrl(`/api/v1/products/image/${id}`)
+      ? setUrl(`https://omni-yxd5.onrender.com/api/v1/products/image/${id}`)
       : setUrl("");
   };
   useEffect(() => {
@@ -54,9 +60,14 @@ const ProductForm = ({
 
   const getDetailsUrl = () => {
     return image2
-      ? setDetailsUrl(URL.createObjectURL(image2))
-      : id
-      ? setDetailsUrl(`/api/v1/products/image/details/${id}`)
+      ? 
+          setDetailsUrl(
+            URL.createObjectURL(image2)
+          )
+      : id ?
+          setDetailsUrl(
+            `https://omni-yxd5.onrender.com/api/v1/products/image/details/${id}`
+          )
       : setDetailsUrl("");
   };
 
@@ -67,7 +78,7 @@ const ProductForm = ({
   if (subCategory && !category) {
     const getCategory = async () => {
       const { data } = await axios.get(
-        `/api/v1/sub-categories/single/${subCategory}`
+        `https://omni-yxd5.onrender.com/api/v1/sub-categories/single/${subCategory}`
       );
       setCategory(data.parentCat._id);
     };
@@ -76,7 +87,7 @@ const ProductForm = ({
 
   return (
     <form
-      className="flex flex-col space-y-5 items-baseline justify-center"
+      className="flex flex-col space-y-5 items-baseline justify-center form-control"
       onReset={handleCancel}
       onSubmit={handleSubmit}
     >
@@ -247,6 +258,28 @@ const ProductForm = ({
           required={!id}
         />
         {id || image2 ? <img src={detailsUrl} alt={name} /> : <></>}
+      </div>
+      <div>
+        <label className="label cursor-pointer space-x-2">
+          <span className="label-text">Featured: </span>
+          <input
+            type="checkbox"
+            className="checkbox"
+            checked={featured}
+            onChange={(e) => setFeatured(e.target.checked)}
+          />
+        </label>
+      </div>
+      <div>
+        <label className="label cursor-pointer space-x-2">
+          <span className="label-text">Bestseller: </span>
+          <input
+            type="checkbox"
+            className="checkbox"
+            checked={bestSeller}
+            onChange={(e) => setBestSeller(e.target.checked)}
+          />
+        </label>
       </div>
       <div className="flex space-x-2">
         <input

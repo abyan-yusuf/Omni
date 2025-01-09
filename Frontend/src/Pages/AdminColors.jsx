@@ -11,7 +11,9 @@ const AdminColors = () => {
   const [auth] = useAuthContext();
   const getAllColors = async () => {
     try {
-      const { data } = await axios.get("/api/v1/colors/all-colors");
+      const { data } = await axios.get(
+        "https://omni-yxd5.onrender.com/api/v1/colors/all-colors"
+      );
       setColors(data);
     } catch (error) {
       toast.error(error);
@@ -28,7 +30,7 @@ const AdminColors = () => {
     try {
       e.preventDefault();
       const { data } = await axios.post(
-        "/api/v1/colors/create",
+        "https://omni-yxd5.onrender.com/api/v1/colors/create",
         { name },
         { headers: { Authorization: auth?.token } }
       );
@@ -54,7 +56,7 @@ const AdminColors = () => {
     try {
       e.preventDefault();
       const { data } = await axios.put(
-        `/api/v1/colors/update/${id}`,
+        `https://omni-yxd5.onrender.com/api/v1/colors/update/${id}`,
         { name: updatedName },
         { headers: { Authorization: auth?.token } }
       );
@@ -75,9 +77,12 @@ const AdminColors = () => {
         "Are you sure you want to delete this color?"
       );
       if (prompt === true) {
-        const { data } = await axios.delete(`/api/v1/colors/delete/${id}`, {
-          headers: { Authorization: auth?.token },
-        });
+        const { data } = await axios.delete(
+          `https://omni-yxd5.onrender.com/api/v1/colors/delete/${id}`,
+          {
+            headers: { Authorization: auth?.token },
+          }
+        );
         if (data) {
           toast.success(data.message);
           getAllColors();

@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useAuthContext } from "../Apis/authContext";
 
 const Register = () => {
   const { register, handleSubmit } = useForm();
@@ -12,17 +11,17 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-          "/api/v1/auth/register",
-          data
-        );
-      console.log(response)
+        "https://omni-yxd5.onrender.com/api/v1/auth/register",
+        data
+      );
+      console.log(response);
       if (response) {
         toast.success("Successfully registered");
         navigate("/login");
       }
     } catch (error) {
       toast.error(error.response.data.message);
-      navigate("/login")
+      navigate("/login");
     }
   };
   return (

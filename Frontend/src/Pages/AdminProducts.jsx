@@ -5,7 +5,7 @@ import axios from "axios";
 import ProductCard from "../Components/ProductCard";
 import { Modal } from "antd";
 import ProductForm from "../Components/ProductForm";
-import { useAuthContext } from "../Apis/authContext";
+import { useAuthContext } from "../Apis/authContext.jsx";
 import { toast } from "react-toastify";
 
 const AdminProducts = () => {
@@ -16,7 +16,7 @@ const AdminProducts = () => {
   const getAllProducts = async () => {
     try {
       const { data } = await axios.get(
-        "/api/v1/products/all"
+        "https://omni-yxd5.onrender.com/api/v1/products/all"
       );
       setProducts(data);
     } catch (error) {
@@ -39,6 +39,8 @@ const AdminProducts = () => {
   const [color, setColor] = useState("");
   const [image1, setImage1] = useState(null);
   const [image2, setImage2] = useState(null);
+  const [featured, setFeatured] = useState(false);
+  const [bestSeller, setBestSeller] = useState(false);
 
   const [id, setId] = useState("");
 
@@ -62,8 +64,10 @@ const AdminProducts = () => {
       productInfo.append("color", color);
       productInfo.append("image1", image1);
       productInfo.append("image2", image2);
+      productInfo.append("featured", featured);
+      productInfo.append("bestSeller", bestSeller);
       const { data } = await axios.post(
-        "/api/v1/products/create",
+        "https://omni-yxd5.onrender.com/api/v1/products/create",
         productInfo,
         {
           headers: {
@@ -77,12 +81,14 @@ const AdminProducts = () => {
       setDescription("");
       setOriginalPrice("");
       setDiscountPrice("");
-      setCategory("");  
+      setCategory("");
       setSubCategory("");
       setSizes([]);
       setColor("");
       setImage1(null);
       setImage2(null);
+      setFeatured(false);
+      setBestSeller(false);
       getAllProducts();
     } catch (error) {
       console.error(error);
@@ -177,6 +183,10 @@ const AdminProducts = () => {
           setSubCategory={setSubCategory}
           handleSubmit={(e) => handleSubmit(e)}
           handleCancel={handleCancel}
+          featured={featured}
+          setFeatured={setFeatured}
+          bestSeller={bestSeller}
+          setBestSeller={setBestSeller}
         />
       </Modal>
     </Layout>
