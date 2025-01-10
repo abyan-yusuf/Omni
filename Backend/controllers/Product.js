@@ -189,7 +189,7 @@ export const getProductDetailsImage = async (req, res) => {
 export const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findById(id).select("-image1 -image2");
+    const product = await Product.findById(id).select("-image1 -image2").populate("category subCategory color sizes");
     if (!product) return res.status(404).send({ message: "Product not found" });
     return res.status(200).json(product);
   } catch (error) {
