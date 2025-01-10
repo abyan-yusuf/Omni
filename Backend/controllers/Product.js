@@ -233,3 +233,24 @@ export const getFeaturedProducts = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+export const getBestSellerProducts = async (req, res) => {
+  try {
+    const bestSellerProducts = await Product.find({ bestSeller: true }).select(
+      "name discountPrice originalPrice color sizes _id"
+    ).populate("color sizes");
+    res.status(200).json(
+      bestSellerProducts.map((p) => ({
+        _id: p._id,
+        name: p.name,
+        discountPrice: p.discountPrice,
+        originalPrice: p.originalPrice,
+        color: p.color.name,
+        sizes: p.sizes.map((s) => s.size),
+      }))
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
