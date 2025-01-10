@@ -203,8 +203,9 @@ export const getLatestPorductsByCat = async (req, res) => {
     const { catid } = req.params;
     const products = await Product.find({ category: catid })
       .sort({ createdAt: -1 })
-      .limit(8).
-      select("-image1 -image2");
+      .limit(8)
+      .populate("color")
+      .select("name discountPrice originalPrice color");
     res.status(200).json(products);
   } catch (error) {
     console.error(error)
