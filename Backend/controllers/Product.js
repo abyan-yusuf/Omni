@@ -212,3 +212,24 @@ export const getLatestPorductsByCat = async (req, res) => {
     res.status(500).send(error)
   }
 }
+
+export const getFeaturedProducts = async (req, res) => {
+  try {
+    const featuredProducts = await Product.find({ featured: true }).select(
+      "name discountPrice originalPrice color sizes _id"
+    ).populate("color sizes");
+    res.status(200).json(
+      featuredProducts.map((p) => ({
+        _id: p._id,
+        name: p.name,
+        discountPrice: p.discountPrice,
+        originalPrice: p.originalPrice,
+        color: p.color.name,
+        sizes: p.sizes.map((s) => s.size),
+      }))
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
