@@ -9,6 +9,7 @@ import {
   getProductImage,
   updateProduct,
   getFeaturedProducts,
+  getBestSellerProducts
 } from "../controllers/Product.js";
 import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
 import ExpressFormidable from "express-formidable";
@@ -32,5 +33,7 @@ router.get("/single/:id", getProductById);
 router.get("/latest/:catid", getLatestPorductsByCat);
 
 router.get("/featured", getFeaturedProducts);
+
+router.get("/bestseller", getBestSellerProducts);
 
 export default router;
