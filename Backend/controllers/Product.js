@@ -206,7 +206,7 @@ export const getLatestPorductsByCat = async (req, res) => {
       .limit(8)
       .populate("color sizes")
       .select("name discountPrice originalPrice color sizes _id");
-    res.status(200).json([products.map(p => {_id:p._id, name: p.name, discountPrice: p.discountPrice, originalPrice: p.originalPrice, color: p.color.name, sizes: [p.sizes.map(s=>s.size)]})]);
+    res.status(200).json([products.map((p) => ({_id:p._id, name: p.name, discountPrice: p.discountPrice, originalPrice: p.originalPrice, color: p.color.name, sizes: [p.sizes.map(s=>s.size)]}))]);
   } catch (error) {
     console.error(error)
     res.status(500).send(error)
