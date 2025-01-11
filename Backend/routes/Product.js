@@ -3,16 +3,20 @@ import {
   createProduct,
   deleteProduct,
   getAllProducts,
+  getBestSellerProducts,
+  getFeaturedProducts,
   getLatestPorductsByCat,
   getProductById,
   getProductDetailsImage,
   getProductImage,
+  getProductsByCategory,
+  getProductsBySubCategory,
+  getSimilarProducts,
   updateProduct,
-  getFeaturedProducts,
-  getBestSellerProducts
 } from "../controllers/Product.js";
 import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
 import ExpressFormidable from "express-formidable";
+import { get } from "https";
 
 const router = Router();
 
@@ -35,5 +39,11 @@ router.get("/latest/:catid", getLatestPorductsByCat);
 router.get("/featured", getFeaturedProducts);
 
 router.get("/bestseller", getBestSellerProducts);
+
+router.get("/category/:catid", getProductsByCategory);
+
+router.get("/sub-category/:subcatid", getProductsBySubCategory);
+
+router.get("/similar/:id", getSimilarProducts);
 
 export default router;
