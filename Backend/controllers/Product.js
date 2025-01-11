@@ -254,3 +254,74 @@ export const getBestSellerProducts = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+
+export const getProductsByCategory = async (req, res) => {
+  try {
+    const { catid } = req.params;
+    const products = await Product.find({ category: catid })
+      .select("name discountPrice originalPrice color sizes _id")
+      .populate("color sizes");
+    res.status(200).json(
+      products.map((p) => ({
+        _id: p._id,
+        name: p.name,
+        discountPrice: p.discountPrice,
+        originalPrice: p.originalPrice,
+        color: p.color.name,
+        sizes: p.sizes.map((s) => s.size),
+      }))
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+};
+
+export const getProductsBySubCategory = async (req, res) => {
+  try {
+    const { subcatid } = req.params;
+    const products = await Product.find({ subCategory: subcatid })
+      .select("name discountPrice originalPrice color sizes _id")
+      .populate("color sizes");
+    res.status(200).json(
+      products.map((p) => ({
+        _id: p._id,
+        name: p.name,
+        discountPrice: p.discountPrice,
+        originalPrice: p.originalPrice,
+        color: p.color.name,
+        sizes: p.sizes.map((s) => s.size),
+      }))
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+}
+
+export const getSimilarProducts = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (!product) return res.status(404).send({ message: "Product not found" });
+    const products = await Product.find({ subCategory: product.subCategory })
+      .select("name discountPrice originalPrice color sizes _id")
+      .populate("color sizes");
+    res.status(200).json(
+      products
+        .filter((p) => p._id.toString() !== id)
+        .map((p) => ({
+          _id: p._id,
+          name: p.name,
+          discountPrice: p.discountPrice,
+          originalPrice: p.originalPrice,
+          color: p.color.name,
+          sizes: p.sizes.map((s) => s.size),
+        }))
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error);
+  }
+}
