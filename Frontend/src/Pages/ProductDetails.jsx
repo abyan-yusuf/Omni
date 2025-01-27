@@ -22,7 +22,7 @@ const ProductDetails = () => {
   const getProduct = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-yxd5.onrender.com/api/v1/products/single/${id}`
+        `https://omni-1-men7.onrender.com/api/v1/products/single/${id}`
       );
       setProduct(data);
     } catch (error) {
@@ -36,7 +36,7 @@ const ProductDetails = () => {
   }, [id]);
 
   const [selectedSize, setSelectedSize] = useState(null);
-  console.log(selectedSize)
+  console.log(selectedSize);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -45,7 +45,7 @@ const ProductDetails = () => {
   const getRelatedProducts = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-yxd5.onrender.com/api/v1/products/similar/${product._id}`
+        `https://omni-1-men7.onrender.com/api/v1/products/similar/${product._id}`
       );
       setRelatedProducts(data);
       console.log(data);
@@ -90,7 +90,7 @@ const ProductDetails = () => {
             <div className="basis-1/2">
               {" "}
               <ProductImageZoom
-                imageSrc={`https://omni-yxd5.onrender.com/api/v1/products/image/details/${product?._id}`}
+                imageSrc={`https://omni-1-men7.onrender.com/api/v1/products/image/details/${product?._id}`}
               />
             </div>
             <div className="basis-1/2">
@@ -181,12 +181,15 @@ const ProductDetails = () => {
                         ...cartData,
                         { product, quantity, size: selectedSize },
                       ]);
-                      localStorage.setItem("cart", JSON.stringify([...cartData,
-                        {product, quantity, size: selectedSize },
-                      ]));
-                      toast.success("Successfully added to cart")
+                      localStorage.setItem(
+                        "cart",
+                        JSON.stringify([
+                          ...cartData,
+                          { product, quantity, size: selectedSize },
+                        ])
+                      );
+                      toast.success("Successfully added to cart");
                     }
-                    
                   }}
                 >
                   ADD TO CART

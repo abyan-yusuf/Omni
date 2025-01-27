@@ -12,7 +12,7 @@ const AdminColors = () => {
   const getAllColors = async () => {
     try {
       const { data } = await axios.get(
-        "https://omni-yxd5.onrender.com/api/v1/colors/all-colors"
+        "https://omni-1-men7.onrender.com/api/v1/colors/all-colors"
       );
       setColors(data);
     } catch (error) {
@@ -30,7 +30,7 @@ const AdminColors = () => {
     try {
       e.preventDefault();
       const { data } = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/colors/create",
+        "https://omni-1-men7.onrender.com/api/v1/colors/create",
         { name },
         { headers: { Authorization: auth?.token } }
       );
@@ -56,7 +56,7 @@ const AdminColors = () => {
     try {
       e.preventDefault();
       const { data } = await axios.put(
-        `https://omni-yxd5.onrender.com/api/v1/colors/update/${id}`,
+        `https://omni-1-men7.onrender.com/api/v1/colors/update/${id}`,
         { name: updatedName },
         { headers: { Authorization: auth?.token } }
       );
@@ -78,7 +78,7 @@ const AdminColors = () => {
       );
       if (prompt === true) {
         const { data } = await axios.delete(
-          `https://omni-yxd5.onrender.com/api/v1/colors/delete/${id}`,
+          `https://omni-1-men7.onrender.com/api/v1/colors/delete/${id}`,
           {
             headers: { Authorization: auth?.token },
           }

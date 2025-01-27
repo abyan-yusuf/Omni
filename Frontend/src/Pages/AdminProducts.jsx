@@ -16,7 +16,7 @@ const AdminProducts = () => {
   const getAllProducts = async () => {
     try {
       const { data } = await axios.get(
-        "https://omni-yxd5.onrender.com/api/v1/products/all"
+        "https://omni-1-men7.onrender.com/api/v1/products/all"
       );
       setProducts(data);
     } catch (error) {
@@ -67,7 +67,7 @@ const AdminProducts = () => {
       productInfo.append("featured", featured);
       productInfo.append("bestSeller", bestSeller);
       const { data } = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/products/create",
+        "https://omni-1-men7.onrender.com/api/v1/products/create",
         productInfo,
         {
           headers: {

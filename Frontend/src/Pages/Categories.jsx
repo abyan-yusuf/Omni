@@ -20,7 +20,7 @@ const Categories = () => {
 
   const getAllCategories = async () => {
     const { data } = await axios.get(
-      "https://omni-yxd5.onrender.com/api/v1/categories/all-categories"
+      "https://omni-1-men7.onrender.com/api/v1/categories/all-categories"
     );
     setCategories(data);
   };
@@ -32,7 +32,7 @@ const Categories = () => {
       categoryInfo.append("name", name);
       categoryInfo.append("image", image);
       const { data } = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/categories/create",
+        "https://omni-1-men7.onrender.com/api/v1/categories/create",
         categoryInfo,
         { headers: { Authorization: auth?.token } }
       );
@@ -58,7 +58,7 @@ const Categories = () => {
       }
       if (id.length > 2) {
         const { data } = await axios.delete(
-          `https://omni-yxd5.onrender.com/api/v1/categories/delete/${id}`,
+          `https://omni-1-men7.onrender.com/api/v1/categories/delete/${id}`,
           { headers: { Authorization: auth.token } }
         );
         if (data) {
@@ -83,7 +83,7 @@ const Categories = () => {
     categoryInfo.append("image", updatedImage);
     try {
       const { data } = await axios.put(
-        `https://omni-yxd5.onrender.com/api/v1/categories/update/${selected._id}`,
+        `https://omni-1-men7.onrender.com/api/v1/categories/update/${selected._id}`,
         categoryInfo,
         { headers: { Authorization: auth.token } }
       );
@@ -127,7 +127,7 @@ const Categories = () => {
                     <th>{i + 1}</th>
                     <td>
                       <img
-                        src={`https://omni-yxd5.onrender.com/api/v1/categories/image/${category._id}`}
+                        src={`https://omni-1-men7.onrender.com/api/v1/categories/image/${category._id}`}
                         className="h-20 w-auto"
                       />
                     </td>

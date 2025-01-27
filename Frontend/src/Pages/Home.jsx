@@ -17,7 +17,7 @@ const Home = () => {
   const getAllSlides = async () => {
     try {
       const { data } = await axios.get(
-        "https://omni-yxd5.onrender.com/api/v1/slides/all-slides"
+        "https://omni-1-men7.onrender.com/api/v1/slides/all-slides"
       );
       setSlides(data);
     } catch (error) {
@@ -38,7 +38,7 @@ const Home = () => {
   const getLatestProducts = async (c) => {
     try {
       const { data } = await axios.get(
-        `https://omni-yxd5.onrender.com/api/v1/products/latest/${c}`
+        `https://omni-1-men7.onrender.com/api/v1/products/latest/${c}`
       );
       setLatestProducts(data);
     } catch (error) {
@@ -49,23 +49,27 @@ const Home = () => {
 
   const getFeaturedProducts = async () => {
     try {
-      const { data } = await axios.get('https://omni-yxd5.onrender.com/api/v1/products/featured')
-      setFeaturedProducts(data)
+      const { data } = await axios.get(
+        "https://omni-1-men7.onrender.com/api/v1/products/featured"
+      );
+      setFeaturedProducts(data);
     } catch (error) {
-      console.error(error)
-      toast.error(error?.response?.data?.message)
+      console.error(error);
+      toast.error(error?.response?.data?.message);
     }
-  }
+  };
 
   const getBestSellerProducts = async () => {
     try {
-      const { data } = await axios.get('https://omni-yxd5.onrender.com/api/v1/products/bestseller')
-      setBestSellerProducts(data)
+      const { data } = await axios.get(
+        "https://omni-1-men7.onrender.com/api/v1/products/bestseller"
+      );
+      setBestSellerProducts(data);
     } catch (error) {
-      console.error(error)
-      toast.error(error?.response?.data?.message)
+      console.error(error);
+      toast.error(error?.response?.data?.message);
     }
-  }
+  };
 
   useEffect(() => {
     if (categories.length > 0) {
@@ -74,12 +78,12 @@ const Home = () => {
   }, [categories]);
 
   useEffect(() => {
-    getFeaturedProducts()
-  }, [])
+    getFeaturedProducts();
+  }, []);
 
   useEffect(() => {
-    getBestSellerProducts()
-  }, [])
+    getBestSellerProducts();
+  }, []);
   return (
     <>
       {slides.length === 0 &&
@@ -107,7 +111,7 @@ const Home = () => {
                     className="w-[screen] h-[38.5vw]"
                   >
                     <img
-                      src={`https://omni-yxd5.onrender.com/api/v1/slides/image/${slide._id}`}
+                      src={`https://omni-1-men7.onrender.com/api/v1/slides/image/${slide._id}`}
                       alt="slide"
                       className="w-full h-full"
                     />
@@ -125,7 +129,7 @@ const Home = () => {
                 >
                   {/* Image */}
                   <img
-                    src={`https://omni-yxd5.onrender.com/api/v1/categories/image/${category._id}`}
+                    src={`https://omni-1-men7.onrender.com/api/v1/categories/image/${category._id}`}
                     className="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
 
@@ -143,7 +147,7 @@ const Home = () => {
                   className="flex space-x-3 items-center"
                 >
                   <img
-                    src={`https://omni-yxd5.onrender.com/api/v1/sub-categories/image/${subCategory._id}`}
+                    src={`https://omni-1-men7.onrender.com/api/v1/sub-categories/image/${subCategory._id}`}
                     className="h-16 w-16 rounded-full"
                   />
                   <div>

@@ -13,7 +13,7 @@ const ShowroomDetails = () => {
   const getShowroom = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-yxd5.onrender.com/api/v1/showrooms/single/${id}`
+        `https://omni-1-men7.onrender.com/api/v1/showrooms/single/${id}`
       );
       setShowroom(data);
     } catch (error) {

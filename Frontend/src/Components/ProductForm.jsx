@@ -47,11 +47,9 @@ const ProductForm = ({
 
   const getImageUrl = () => {
     return image1
-      ? setUrl(
-          URL.createObjectURL(image1)
-        )
+      ? setUrl(URL.createObjectURL(image1))
       : id
-      ? setUrl(`https://omni-yxd5.onrender.com/api/v1/products/image/${id}`)
+      ? setUrl(`https://omni-1-men7.onrender.com/api/v1/products/image/${id}`)
       : setUrl("");
   };
   useEffect(() => {
@@ -60,14 +58,11 @@ const ProductForm = ({
 
   const getDetailsUrl = () => {
     return image2
-      ? 
-          setDetailsUrl(
-            URL.createObjectURL(image2)
-          )
-      : id ?
-          setDetailsUrl(
-            `https://omni-yxd5.onrender.com/api/v1/products/image/details/${id}`
-          )
+      ? setDetailsUrl(URL.createObjectURL(image2))
+      : id
+      ? setDetailsUrl(
+          `https://omni-1-men7.onrender.com/api/v1/products/image/details/${id}`
+        )
       : setDetailsUrl("");
   };
 
@@ -78,7 +73,7 @@ const ProductForm = ({
   if (subCategory && !category) {
     const getCategory = async () => {
       const { data } = await axios.get(
-        `https://omni-yxd5.onrender.com/api/v1/sub-categories/single/${subCategory}`
+        `https://omni-1-men7.onrender.com/api/v1/sub-categories/single/${subCategory}`
       );
       setCategory(data.parentCat._id);
     };

@@ -24,7 +24,7 @@ const SubCategories = () => {
 
   const getAllSubCategories = async () => {
     const { data } = await axios.get(
-      "https://omni-yxd5.onrender.com/api/v1/sub-categories/all-sub-categories"
+      "https://omni-1-men7.onrender.com/api/v1/sub-categories/all-sub-categories"
     );
     console.log(data);
     setSubCategories(data);
@@ -37,7 +37,7 @@ const SubCategories = () => {
       categoryInfo.append("image", image);
       categoryInfo.append("parentCat", parentCat);
       const { data } = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/sub-categories/create",
+        "https://omni-1-men7.onrender.com/api/v1/sub-categories/create",
         categoryInfo,
         { headers: { Authorization: auth?.token } }
       );
@@ -65,7 +65,7 @@ const SubCategories = () => {
         return;
       }
       const { data } = await axios.delete(
-        `https://omni-yxd5.onrender.com/api/v1/sub-categories/delete/${id}`,
+        `https://omni-1-men7.onrender.com/api/v1/sub-categories/delete/${id}`,
         { headers: { Authorization: auth.token } }
       );
       if (data) {
@@ -90,7 +90,7 @@ const SubCategories = () => {
       categoryInfo.append("image", updatedImage);
       categoryInfo.append("parentCat", updatedParentCat);
       const { data } = await axios.put(
-        `https://omni-yxd5.onrender.com/api/v1/sub-categories/update/${selected}`,
+        `https://omni-1-men7.onrender.com/api/v1/sub-categories/update/${selected}`,
         categoryInfo,
         { headers: { Authorization: auth.token } }
       );
@@ -135,7 +135,7 @@ const SubCategories = () => {
                     <th>{i + 1}</th>
                     <td>
                       <img
-                        src={`https://omni-yxd5.onrender.com/api/v1/sub-categories/image/${subCategory._id}`}
+                        src={`https://omni-1-men7.onrender.com/api/v1/sub-categories/image/${subCategory._id}`}
                         className="h-20 w-auto"
                       />
                     </td>

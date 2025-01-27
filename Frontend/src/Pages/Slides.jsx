@@ -11,7 +11,7 @@ const Slides = () => {
       const data = new FormData();
       data.append("image", image);
       const response = await axios.post(
-        "https://omni-yxd5.onrender.com/api/v1/slides/create",
+        "https://omni-1-men7.onrender.com/api/v1/slides/create",
         data
       );
       toast.success(response.data.message);
@@ -25,7 +25,7 @@ const Slides = () => {
   const getAllSlides = async () => {
     try {
       const { data } = await axios.get(
-        "https://omni-yxd5.onrender.com/api/v1/slides/all-slides"
+        "https://omni-1-men7.onrender.com/api/v1/slides/all-slides"
       );
       setSlides(data);
     } catch (error) {
@@ -36,7 +36,7 @@ const Slides = () => {
   const handleDelete = async (id) => {
     try {
       const { data } = await axios.delete(
-        `https://omni-yxd5.onrender.com/api/v1/slides/delete/${id}`
+        `https://omni-1-men7.onrender.com/api/v1/slides/delete/${id}`
       );
       toast.success(data.message);
       getAllSlides();
@@ -71,7 +71,7 @@ const Slides = () => {
                   />
                 </button>
                 <img
-                  src={`https://omni-yxd5.onrender.com/api/v1/slides/image/${slide._id}`}
+                  src={`https://omni-1-men7.onrender.com/api/v1/slides/image/${slide._id}`}
                   className="w-full h-56 group-hover:bg-[rgba(0,0,0,0.5)]"
                 />
               </div>

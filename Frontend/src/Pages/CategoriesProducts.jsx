@@ -18,7 +18,7 @@ const CategoriesProducts = () => {
   const getProducts = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-yxd5.onrender.com/api/v1/products/category/${cid}`
+        `https://omni-1-men7.onrender.com/api/v1/products/category/${cid}`
       );
       setProducts(data);
     } catch (error) {
@@ -29,7 +29,7 @@ const CategoriesProducts = () => {
   const getSubCategories = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-yxd5.onrender.com/api/v1/sub-categories/all/${cid}`
+        `https://omni-1-men7.onrender.com/api/v1/sub-categories/all/${cid}`
       );
       setSubCategories(data);
     } catch (error) {
@@ -40,7 +40,7 @@ const CategoriesProducts = () => {
   const getCategory = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-yxd5.onrender.com/api/v1/categories/single/${cid}`
+        `https://omni-1-men7.onrender.com/api/v1/categories/single/${cid}`
       );
       setCategory(data);
     } catch (error) {
@@ -66,23 +66,21 @@ const CategoriesProducts = () => {
   return (
     <>
       {products.length && category && subCategories.length ? (
-        <Layout><div className="">
-                <div className="breadcrumbs text-sm mt-5 ml-5">
-                  <ul>
-                    <li>
-                      <Link to={"/"}>Home</Link>
-                    </li>
-                    <li>
-                      <p>
-                        {category?.name}
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+        <Layout>
+          <div className="">
+            <div className="breadcrumbs text-sm mt-5 ml-5">
+              <ul>
+                <li>
+                  <Link to={"/"}>Home</Link>
+                </li>
+                <li>
+                  <p>{category?.name}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
           <section className="flex space-x-5 mr-10 ml-5">
             <div className="basis-2/12 mb-10 overflow-y-auto max-h-[calc(100vh-5rem)!important] scrollbar-hidden">
-              
               {selectedColor || selectedSize || selectedPrice ? (
                 <>
                   <h2 className="text-lg font-normal mb-3 font-[Forum] tracking-wider">
@@ -232,7 +230,7 @@ const CategoriesProducts = () => {
                     className="flex space-x-3 items-center"
                   >
                     <img
-                      src={`https://omni-yxd5.onrender.com/api/v1/sub-categories/image/${subCategory._id}`}
+                      src={`https://omni-1-men7.onrender.com/api/v1/sub-categories/image/${subCategory._id}`}
                       className="h-16 w-16 rounded-full"
                     />
                     <div>

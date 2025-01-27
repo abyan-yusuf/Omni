@@ -20,7 +20,7 @@ const SubCategoryForm = ({
   const getCategory = async () => {
     if (id) {
       const { data } = await axios.get(
-        `https://omni-yxd5.onrender.com/api/v1/categories/single/${id}`
+        `https://omni-1-men7.onrender.com/api/v1/categories/single/${id}`
       );
       console.log(data);
       setSubCategory(data);
@@ -37,7 +37,7 @@ const SubCategoryForm = ({
     } else {
       if (id)
         return setUrl(
-          `https://omni-yxd5.onrender.com/api/v1/sub-categories/image/${id}`
+          `https://omni-1-men7.onrender.com/api/v1/sub-categories/image/${id}`
         );
     }
   };
