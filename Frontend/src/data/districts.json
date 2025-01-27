@@ -1,0 +1,258 @@
+[
+    {
+        "district": "Barguna",
+        "division": "Barisal"
+    },
+    {
+        "district": "Barisal",
+        "division": "Barisal"
+    },
+    {
+        "district": "Bhola",
+        "division": "Barisal"
+    },
+    {
+        "district": "Jhalokati",
+        "division": "Barisal"
+    },
+    {
+        "district": "Patuakhali",
+        "division": "Barisal"
+    },
+    {
+        "district": "Pirojpur",
+        "division": "Barisal"
+    },
+    {
+        "district": "Bandarban",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Brahmanbaria",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Chandpur",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Chittagong",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Comilla",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Cox's Bazar",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Feni",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Khagrachhari",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Lakshmipur",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Noakhali",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Rangamati",
+        "division": "Chittagong"
+    },
+    {
+        "district": "Dhaka",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Faridpur",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Gazipur",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Gopalganj",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Kishoregonj",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Madaripur",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Manikganj",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Munshiganj",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Narayanganj",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Narsingdi",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Rajbari",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Shariatpur",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Tangail",
+        "division": "Dhaka"
+    },
+    {
+        "district": "Bagerhat",
+        "division": "Khulna"
+    },
+    {
+        "district": "Chuadanga",
+        "division": "Khulna"
+    },
+    {
+        "district": "Jessore",
+        "division": "Khulna"
+    },
+    {
+        "district": "Jhenaidah",
+        "division": "Khulna"
+    },
+    {
+        "district": "Khulna",
+        "division": "Khulna"
+    },
+    {
+        "district": "Kushtia",
+        "division": "Khulna"
+    },
+    {
+        "district": "Magura",
+        "division": "Khulna"
+    },
+    {
+        "district": "Meherpur",
+        "division": "Khulna"
+    },
+    {
+        "district": "Narail",
+        "division": "Khulna"
+    },
+    {
+        "district": "Satkhira",
+        "division": "Khulna"
+    },
+    {
+        "district": "Jamalpur",
+        "division": "Mymensingh"
+    },
+    {
+        "district": "Mymensingh",
+        "division": "Mymensingh"
+    },
+    {
+        "district": "Netrakona",
+        "division": "Mymensingh"
+    },
+    {
+        "district": "Sherpur",
+        "division": "Mymensingh"
+    },
+    {
+        "district": "Bogra",
+        "division": "Rajshahi"
+    },
+    {
+        "district": "Joypurhat",
+        "division": "Rajshahi"
+    },
+    {
+        "district": "Naogaon",
+        "division": "Rajshahi"
+    },
+    {
+        "district": "Natore",
+        "division": "Rajshahi"
+    },
+    {
+        "district": "Chapai Nababganj",
+        "division": "Rajshahi"
+    },
+    {
+        "district": "Pabna",
+        "division": "Rajshahi"
+    },
+    {
+        "district": "Rajshahi",
+        "division": "Rajshahi"
+    },
+    {
+        "district": "Sirajganj",
+        "division": "Rajshahi"
+    },
+    {
+        "district": "Dinajpur",
+        "division": "Rangpur"
+    },
+    {
+        "district": "Gaibandha",
+        "division": "Rangpur"
+    },
+    {
+        "district": "Kurigram",
+        "division": "Rangpur"
+    },
+    {
+        "district": "Lalmonirhat",
+        "division": "Rangpur"
+    },
+    {
+        "district": "Nilphamari Zila",
+        "division": "Rangpur"
+    },
+    {
+        "district": "Panchagarh",
+        "division": "Rangpur"
+    },
+    {
+        "district": "Rangpur",
+        "division": "Rangpur"
+    },
+    {
+        "district": "Thakurgaon",
+        "division": "Rangpur"
+    },
+    {
+        "district": "Habiganj",
+        "division": "Sylhet"
+    },
+    {
+        "district": "Maulvibazar",
+        "division": "Sylhet"
+    },
+    {
+        "district": "Sunamganj",
+        "division": "Sylhet"
+    },
+    {
+        "district": "Sylhet",
+        "division": "Sylhet"
+    }
+]
