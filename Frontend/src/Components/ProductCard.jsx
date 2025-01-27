@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ name, price, discount, id, admin, color, sizes }) => {
+  console.log(sizes)
   return (
     <Link
       className="card p-0 bg-base-100 w-[270px] transition-transform duration-500 rounded-none hover:border-2 hover:w-[270px] hover:h-[388px] h-96 group"

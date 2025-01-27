@@ -134,7 +134,10 @@ export const updateProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
-    res.status(200).json(await Product.find().select("-image1 -image2"));
+    const products = await Product.find()
+      .select("name discountPrice originalPrice color sizes _id")
+      .populate("color sizes");
+    return res.status(200).json(products);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);

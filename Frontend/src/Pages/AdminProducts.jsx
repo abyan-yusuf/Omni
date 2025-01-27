@@ -144,6 +144,8 @@ const AdminProducts = () => {
                 price={product.originalPrice}
                 category={product.category}
                 id={product._id}
+                color={product.color.name}
+                sizes={product.sizes.map(s => s.size)}
                 discount={product.discountPrice}
                 admin={true}
               />
