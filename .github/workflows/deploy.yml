@@ -17,24 +17,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Use Node.js 18
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "18"
 
       - name: 🔨 Build Project
-        run: |
-          cd Frontend
-          npm install
-          npm run build
+        run: npm install && npm run build
+        working-directory: Frontend
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        uses: SamKirkland/FTP-Deploy-Action@4.3.1
         with:
           server: ${{ secrets.ftp_server }}
           username: ${{ secrets.ftp_name }}
           password: ${{ secrets.ftp_password }}
-          dangerous-clean-slate: true
-          local-dir: ./Frontend/dist/
+          local-dir: Frontend/dist/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
