@@ -5,7 +5,7 @@ const ProductCard = ({ name, price, discount, id, admin, color, sizes }) => {
   return (
     <Link
       className="card p-0 bg-base-100 w-[270px] transition-transform duration-500 rounded-none hover:border-2 hover:w-[270px] hover:h-[388px] h-96 group"
-      to={`${admin ? "/dashboard/products" : `/products/details/${id}`}`}
+      to={`${admin ? `/dashboard/products/details/${id}` : `/products/details/${id}`}`}
     >
       <figure className="h-[225px] mb-[14px]">
         <img
@@ -41,12 +41,12 @@ const ProductCard = ({ name, price, discount, id, admin, color, sizes }) => {
               Tk. {discount}
             </p>
           )}
-        </p>
+        </p>{!admin &&
         <div className="card-actions justify-end">
           <button className="btn w-full px-0 rounded-none mt-5 text-transparent text-lg font-normal  hover:bg-[red!important] bg-transparent border-none shadow-none group-hover:text-white group-hover:bg-black transition-all duration-500 z-10">
             Shop Now
           </button>
-        </div>
+        </div>}
         <div className="tooltip mt-2 z-20" data-tip={color}>
           <div
             className={`w-7 h-7 rounded-full mx-auto invisible group-hover:visible`}

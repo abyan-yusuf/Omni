@@ -84,6 +84,8 @@ const Home = () => {
   useEffect(() => {
     getBestSellerProducts();
   }, []);
+
+  console.log(featuredProducts)
   return (
     <>
       {slides.length === 0 &&

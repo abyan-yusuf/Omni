@@ -62,7 +62,7 @@ const CategoriesProducts = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState(null);
-  console.log([selectedColor, selectedSize, selectedPrice]);
+  console.log()
   return (
     <>
       {products.length && category && subCategories.length ? (

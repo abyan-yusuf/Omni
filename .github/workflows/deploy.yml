@@ -26,6 +26,7 @@ jobs:
 
       - name: 🔨 Build Project
         run: |
+          cd Frontend
           npm install
           npm run build
 
@@ -36,4 +37,4 @@ jobs:
           username: ${{ secrets.ftp_name }}
           password: ${{ secrets.ftp_password }}
           dangerous-clean-slate: true
-          local-dir: ./dist/
+          local-dir: ./Frontend/dist/

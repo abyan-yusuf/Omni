@@ -136,7 +136,7 @@ const AdminProducts = () => {
           >
             Add Product
           </button>
-          <div className="grid grid-cols-4 gap-5 mt-5 mr-20">
+          <div className="grid grid-cols-3 gap-5 mt-5 mr-20">
             {products.map((product) => (
               <ProductCard
                 key={product._id}
