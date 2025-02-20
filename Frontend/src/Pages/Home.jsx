@@ -84,17 +84,8 @@ const Home = () => {
   useEffect(() => {
     getBestSellerProducts();
   }, []);
-
-  console.log(featuredProducts)
   return (
     <>
-      {slides.length === 0 &&
-      categories.length === 0 &&
-      subCategories.length === 0 &&
-      latestProducts.length < 1 ? (
-        <Loader />
-      ) : (
-        latestProducts.length > 0 && (
           <Layout>
             {/* Slides */}
             <section>
@@ -279,8 +270,6 @@ const Home = () => {
               )}
             </section>
           </Layout>
-        )
-      )}
     </>
   );
 };

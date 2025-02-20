@@ -152,7 +152,7 @@ const AdminStores = () => {
         <div className="basis-1/5">
           <AdminMenu />
         </div>
-        <div className="basis-4/5 ml-2">
+        <div className="basis-4/5 max-w-[78vw] ml-2">
           <h2 className="text-3xl text-center mt-5">Manage Showrooms</h2>
           <div className="overflow-x-auto mt-10">
             <table className="table mb-5">

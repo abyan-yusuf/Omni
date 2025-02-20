@@ -35,11 +35,10 @@ export const createProduct = async (req, res) => {
     if (!color) return res.status(404).send({ message: "Color is required" });
     if (!sizes) return res.status(404).send({ message: "Sizes is required" });
     const existingProductByCode = await Product.findOne({ code });
-    const existingProductByName = await Product.findOne({ name });
-    if (existingProductByCode || existingProductByName)
+    if (existingProductByCode)
       return res
         .status(500)
-        .send({ message: "Product already exists by code or name" });
+        .send({ message: "Product already exists by code" });
 
     const sizesArray = typeof sizes === "string" ? JSON.parse(sizes) : sizes;
 
