@@ -6,7 +6,7 @@ const useSizes = () => {
 
   const getSizes = async () => {
     const { data } = await axios.get(
-      "https://omni-1-men7.onrender.com/api/v1/sizes/all-sizes"
+      "https://backend.omnishoesbd.com/api/v1/sizes/all-sizes"
     );
     setSizes(data);
   };

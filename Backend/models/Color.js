@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
+const { model, Schema } = require("mongoose");
 
-const colorScema = new Schema(
+const colorSchema = new Schema(
   {
     name: {
       type: String,
@@ -11,4 +11,4 @@ const colorScema = new Schema(
   { timestamps: true }
 );
 
-export default model("color", colorScema);
+module.exports = model("color", colorSchema);

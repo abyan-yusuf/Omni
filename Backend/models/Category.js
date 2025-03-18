@@ -1,15 +1,18 @@
-import { model, Schema } from "mongoose";
+const { model, Schema } = require("mongoose");
 
-const categoryScema = new Schema({
+const categorySchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     image: {
-        data: Buffer,
-        contentType: String
-    }
-}, {timestamps: true})
+      data: Buffer,
+      contentType: String,
+    },
+  },
+  { timestamps: true }
+);
 
-export default model("category", categoryScema)
+module.exports = model("category", categorySchema);

@@ -9,7 +9,7 @@ const useColors = () => {
     const getColors = async () => {
       try {
         const { data } = await axios.get(
-          "https://omni-1-men7.onrender.com/api/v1/colors/all-colors"
+          "https://backend.omnishoesbd.com/api/v1/colors/all-colors"
         );
         setColors(data);
       } catch (error) {

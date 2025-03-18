@@ -1,4 +1,5 @@
-import mongoose, { model, Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
 
 const subCategorySchema = new Schema(
   {
@@ -13,10 +14,10 @@ const subCategorySchema = new Schema(
     },
     image: {
       data: Buffer,
-      contentType: String
+      contentType: String,
     },
   },
   { timestamps: true }
 );
 
-export default model("sub-Category", subCategorySchema)
+module.exports = model("sub-Category", subCategorySchema);

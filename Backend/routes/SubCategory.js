@@ -1,6 +1,5 @@
-
-import { Router } from "express";
-import {
+const express = require("express");
+const {
   createSubCategory,
   deleteSubCategory,
   getAllSubCategories,
@@ -8,12 +7,12 @@ import {
   getSubCategoriesByParentCat,
   getSubCategoryById,
   updateSubCategory,
-} from "../controllers/SubCategory.js";
+} = require("../controllers/SubCategory.js");
 
-import formidable from "express-formidable";
-import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
+const formidable = require("express-formidable");
+const { isAdmin, requireSignIn } = require("../middlewares/Auth.js");
 
-const router = Router();
+const router = express.Router();
 
 router.get("/all-sub-categories", getAllSubCategories);
 
@@ -35,4 +34,4 @@ router.get("/image/:subid", getImageById);
 
 router.get("/all/:parentCat", getSubCategoriesByParentCat);
 
-export default router;
+module.exports = router;

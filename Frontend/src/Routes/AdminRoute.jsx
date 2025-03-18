@@ -12,7 +12,7 @@ const AdminRoute = () => {
     useEffect(() => {
       const authCheck = async (token) => {
         const res = await axios.get(
-          "https://omni-1-men7.onrender.com/api/v1/auth/admin-auth",
+          "https://backend.omnishoesbd.com/api/v1/auth/admin-auth",
           {
             headers: {
               Authorization: token,

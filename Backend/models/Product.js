@@ -1,4 +1,5 @@
-import mongoose, { model, Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
 
 const productSchema = new Schema(
   {
@@ -29,7 +30,7 @@ const productSchema = new Schema(
     },
     discountPrice: {
       type: Number,
-      default: () => {
+      default: function () {
         return this.originalPrice;
       },
     },
@@ -63,4 +64,4 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("product", productSchema);
+module.exports = model("product", productSchema);

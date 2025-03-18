@@ -14,7 +14,7 @@ const AdminSizes = () => {
   const getAllSizes = async () => {
     try {
       const { data } = await axios.get(
-        "https://omni-1-men7.onrender.com/api/v1/sizes/all-sizes"
+        "https://backend.omnishoesbd.com/api/v1/sizes/all-sizes"
       );
       setSizes(data);
     } catch (error) {
@@ -67,7 +67,7 @@ const AdminSizes = () => {
                             );
                             if (confirm) {
                               const { data } = await axios.delete(
-                                `https://omni-1-men7.onrender.com/api/v1/sizes/delete/${size._id}`,
+                                `https://backend.omnishoesbd.com/api/v1/sizes/delete/${size._id}`,
                                 {
                                   headers: { Authorization: auth?.token },
                                 }
@@ -107,7 +107,7 @@ const AdminSizes = () => {
             e.preventDefault();
             try {
               const { data } = await axios.post(
-                "https://omni-1-men7.onrender.com/api/v1/sizes/create",
+                "https://backend.omnishoesbd.com/api/v1/sizes/create",
                 {
                   size: e.target.size.value,
                 },
@@ -155,7 +155,7 @@ const AdminSizes = () => {
             e.preventDefault();
             try {
               const { data } = await axios.put(
-                `https://omni-1-men7.onrender.com/api/v1/sizes/update/${updateSize.id}`,
+                `https://backend.omnishoesbd.com/api/v1/sizes/update/${updateSize.id}`,
                 {
                   size: e.target.size.value,
                 },

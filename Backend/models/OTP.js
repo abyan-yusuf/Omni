@@ -1,20 +1,21 @@
-import mongoose, { model, Schema } from "mongoose"
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
 
 const OTPSchema = new Schema({
-    userId: {
-        type: mongoose.ObjectId,
-        ref: "auth"
-    },
-    otp: {
-        type: String
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    expiresAt: {
-        type: Date
-    }
-})
+  userId: {
+    type: mongoose.ObjectId,
+    ref: "auth",
+  },
+  otp: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  expiresAt: {
+    type: Date,
+  },
+});
 
-export default model("otp", OTPSchema)
+module.exports = model("otp", OTPSchema);

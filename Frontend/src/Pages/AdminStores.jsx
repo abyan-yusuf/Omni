@@ -37,7 +37,7 @@ const AdminStores = () => {
 
   const getAllStores = async () => {
     const { data } = await axios.get(
-      "https://omni-1-men7.onrender.com/api/v1/showrooms/all-showrooms"
+      "https://backend.omnishoesbd.com/api/v1/showrooms/all-showrooms"
     );
     setStores(data);
   };
@@ -46,7 +46,7 @@ const AdminStores = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "https://omni-1-men7.onrender.com/api/v1/showrooms/create",
+        "https://backend.omnishoesbd.com/api/v1/showrooms/create",
         {
           name,
           code,
@@ -91,7 +91,7 @@ const AdminStores = () => {
         return;
       } else if (id.length > 2) {
         const { data } = await axios.delete(
-          `https://omni-1-men7.onrender.com/api/v1/showrooms/delete/${id}`,
+          `https://backend.omnishoesbd.com/api/v1/showrooms/delete/${id}`,
           { headers: { Authorization: auth.token } }
         );
         if (data) {
@@ -114,7 +114,7 @@ const AdminStores = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put(
-        `https://omni-1-men7.onrender.com/api/v1/showrooms/update/${selected._id}`,
+        `https://backend.omnishoesbd.com/api/v1/showrooms/update/${selected._id}`,
         {
           name: updatedName,
           code: updatedCode,

@@ -1,18 +1,19 @@
-import mongoose, { model, Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
 
 const pcSchema = new Schema({
-    product: {
-        type: mongoose.ObjectId,
-        ref: "product"
-    },
-    color: {
-        type: mongoose.ObjectId,
-        ref: "color"
-    },
-    default: {
-        type: Boolean,
-        default: false
-    }
-})
+  product: {
+    type: mongoose.ObjectId,
+    ref: "product",
+  },
+  color: {
+    type: mongoose.ObjectId,
+    ref: "color",
+  },
+  default: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-export default model("product_color", pcSchema)
+module.exports = model("product_color", pcSchema);

@@ -1,4 +1,5 @@
-import { model, Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
 
 const showroomSchema = new Schema({
   name: {
@@ -52,4 +53,4 @@ const showroomSchema = new Schema({
 
 showroomSchema.index({ location: "2dsphere" });
 
-export default model("showroom", showroomSchema);
+module.exports = model("showroom", showroomSchema);

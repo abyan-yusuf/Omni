@@ -13,7 +13,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       let response = await axios.post(
-        "https://omni-1-men7.onrender.com/api/v1/auth/login",
+        "https://backend.omnishoesbd.com/api/v1/auth/login",
         data
       );
       if (response.data.message === "Logged in successfully") {

@@ -1,7 +1,7 @@
-import Product from "../models/Product.js";
-import fs from "fs";
+const Product = require("../models/Product.js");
+const fs = require("fs");
 
-export const createProduct = async (req, res) => {
+exports.createProduct = async (req, res) => {
   try {
     const {
       name,
@@ -62,7 +62,7 @@ export const createProduct = async (req, res) => {
   }
 };
 
-export const updateProduct = async (req, res) => {
+exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const {
@@ -131,7 +131,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-export const getAllProducts = async (req, res) => {
+exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find()
       .select("name discountPrice originalPrice color sizes _id")
@@ -143,7 +143,7 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-export const deleteProduct = async (req, res) => {
+exports.deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedProduct = await Product.findByIdAndDelete(id);
@@ -156,7 +156,7 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
-export const getProductImage = async (req, res) => {
+exports.getProductImage = async (req, res) => {
   try {
     const { id } = req.params;
     const productImage = await Product.findById(id).select(`image1`);
@@ -172,7 +172,7 @@ export const getProductImage = async (req, res) => {
   }
 };
 
-export const getProductDetailsImage = async (req, res) => {
+exports.getProductDetailsImage = async (req, res) => {
   try {
     const { id } = req.params;
     const productImage = await Product.findById(id).select(`image2`);
@@ -188,7 +188,7 @@ export const getProductDetailsImage = async (req, res) => {
   }
 };
 
-export const getProductById = async (req, res) => {
+exports.getProductById = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Product.findById(id);
@@ -200,7 +200,7 @@ export const getProductById = async (req, res) => {
   }
 };
 
-export const getLatestPorductsByCat = async (req, res) => {
+exports.getLatestPorductsByCat = async (req, res) => {
   try {
     const { catid } = req.params;
     const products = await Product.find({ category: catid })
@@ -208,21 +208,23 @@ export const getLatestPorductsByCat = async (req, res) => {
       .limit(8)
       .select("name discountPrice originalPrice color sizes _id")
       .populate("color sizes");
-    res.status(200).json(products.map((p) => ({
+    res.status(200).json(
+      products.map((p) => ({
         _id: p._id,
         name: p.name,
         discountPrice: p.discountPrice,
         originalPrice: p.originalPrice,
         color: p.color.name,
         sizes: p.sizes.map((s) => s.size),
-      })));
+      }))
+    );
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
   }
 };
 
-export const getFeaturedProducts = async (req, res) => {
+exports.getFeaturedProducts = async (req, res) => {
   try {
     const featuredProducts = await Product.find({ featured: true })
       .select("name discountPrice originalPrice color sizes _id")
@@ -243,7 +245,7 @@ export const getFeaturedProducts = async (req, res) => {
   }
 };
 
-export const getBestSellerProducts = async (req, res) => {
+exports.getBestSellerProducts = async (req, res) => {
   try {
     const bestSellerProducts = await Product.find({ bestSeller: true })
       .select("name discountPrice originalPrice color sizes _id")
@@ -264,7 +266,7 @@ export const getBestSellerProducts = async (req, res) => {
   }
 };
 
-export const getProductsByCategory = async (req, res) => {
+exports.getProductsByCategory = async (req, res) => {
   try {
     const { catid } = req.params;
     const products = await Product.find({ category: catid })
@@ -286,7 +288,7 @@ export const getProductsByCategory = async (req, res) => {
   }
 };
 
-export const getProductsBySubCategory = async (req, res) => {
+exports.getProductsBySubCategory = async (req, res) => {
   try {
     const { subcatid } = req.params;
     const products = await Product.find({ subCategory: subcatid })
@@ -306,9 +308,9 @@ export const getProductsBySubCategory = async (req, res) => {
     console.error(error);
     res.status(500).send(error);
   }
-}
+};
 
-export const getSimilarProducts = async (req, res) => {
+exports.getSimilarProducts = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Product.findById(id);
@@ -332,4 +334,4 @@ export const getSimilarProducts = async (req, res) => {
     console.error(error);
     res.status(500).send(error);
   }
-}
+};

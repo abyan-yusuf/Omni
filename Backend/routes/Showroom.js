@@ -1,5 +1,5 @@
-import { Router } from "express";
-import {
+const express = require("express");
+const {
   createShowroom,
   deleteShowroom,
   getAllShowrooms,
@@ -7,10 +7,10 @@ import {
   getNearbyShowrooms,
   getShowroomById,
   updateShowroom,
-} from "../controllers/Showroom.js";
-import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
+} = require("../controllers/Showroom.js");
+const { isAdmin, requireSignIn } = require("../middlewares/Auth.js");
 
-const router = Router();
+const router = express.Router();
 
 router.post("/create", requireSignIn, isAdmin, createShowroom);
 
@@ -26,4 +26,4 @@ router.get("/single/:id", getShowroomById);
 
 router.post("/filtered-showrooms", getFilteredShowrooms);
 
-export default router;
+module.exports = router;

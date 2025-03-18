@@ -23,7 +23,7 @@ const Showrooms = () => {
       setSelectedDistrict(" ");
       setSelectedThana(" ");
       const { data } = await axios.post(
-        "https://omni-1-men7.onrender.com/api/v1/showrooms/nearby",
+        "https://backend.omnishoesbd.com/api/v1/showrooms/nearby",
         {
           latitude,
           longitude,
@@ -56,7 +56,7 @@ const Showrooms = () => {
   const getAllShowrooms = async () => {
     try {
       let response = await axios.get(
-        "https://omni-1-men7.onrender.com/api/v1/showrooms/all-showrooms"
+        "https://backend.omnishoesbd.com/api/v1/showrooms/all-showrooms"
       );
       setShowrooms(response.data);
     } catch (error) {

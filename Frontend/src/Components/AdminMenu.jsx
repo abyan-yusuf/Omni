@@ -112,6 +112,21 @@ const AdminMenu = () => {
             Sizes
           </NavLink>
         </li>
+
+        <li className="border-b-2">
+          <NavLink
+            to={"/dashboard/directors"}
+            className={({ isActive }) =>
+              [
+                isActive ? "bg-gray-200" : "",
+                "rounded-none transition-all active:text-[black!important] active:bg-[#e5e7eb!important] hover:outline-0",
+              ].join(" ")
+            }
+          >
+            BOD
+          </NavLink>
+        </li>
+
       </ul>
     </>
   );

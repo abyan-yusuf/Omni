@@ -1,10 +1,11 @@
-import { model, Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
 
 const SlideSchema = new Schema({
-    image: {
-        data: Buffer,
-        contentType: String
-    }
-})
+  image: {
+    data: Buffer,
+    contentType: String,
+  },
+});
 
-export default model("slide", SlideSchema)
+module.exports = model("slide", SlideSchema);

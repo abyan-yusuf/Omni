@@ -22,6 +22,7 @@ import { getDivisions } from "./data";
 import ProductDetails from "./Pages/ProductDetails";
 import CategoriesProducts from "./Pages/CategoriesProducts";
 import SubCategoryProducts from "./Pages/SubCategoryProducts";
+import AdminDirectors from "./Pages/AdminDirectors";
 
 const App = () => {
   return (
@@ -44,13 +45,15 @@ const App = () => {
           <Route
             path="products/details/:id"
             element={<AdminProductDetails />}
-          />
+          />{" "}
+          <Route path="directors" element={<AdminDirectors />} />
         </Route>
+
         <Route path="/showrooms" element={<Showrooms />} />
         <Route path="/showrooms/details/:id" element={<ShowroomDetails />} />
         <Route path="/products/details/:id" element={<ProductDetails />} />
         <Route path="/category/:cid" element={<CategoriesProducts />} />
-        <Route path="/sub-category/:sid" element={<SubCategoryProducts/>} />
+        <Route path="/sub-category/:sid" element={<SubCategoryProducts />} />
       </Routes>
     </>
   );

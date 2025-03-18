@@ -1,4 +1,5 @@
-import mongoose, { model, Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
 
 const psSchema = new Schema({
   color: {
@@ -8,4 +9,4 @@ const psSchema = new Schema({
   sizes: [{ type: mongoose.Schema.Types.ObjectId, ref: "sizes" }],
 });
 
-export default model("product_Size", psSchema);
+module.exports = model("product_Size", psSchema);

@@ -49,7 +49,7 @@ const ProductForm = ({
     return image1
       ? setUrl(URL.createObjectURL(image1))
       : id
-      ? setUrl(`https://omni-1-men7.onrender.com/api/v1/products/image/${id}`)
+      ? setUrl(`https://backend.omnishoesbd.com/api/v1/products/image/${id}`)
       : setUrl("");
   };
   useEffect(() => {
@@ -61,7 +61,7 @@ const ProductForm = ({
       ? setDetailsUrl(URL.createObjectURL(image2))
       : id
       ? setDetailsUrl(
-          `https://omni-1-men7.onrender.com/api/v1/products/image/details/${id}`
+          `https://backend.omnishoesbd.com/api/v1/products/image/details/${id}`
         )
       : setDetailsUrl("");
   };
@@ -73,7 +73,7 @@ const ProductForm = ({
   if (subCategory && !category) {
     const getCategory = async () => {
       const { data } = await axios.get(
-        `https://omni-1-men7.onrender.com/api/v1/sub-categories/single/${subCategory}`
+        `https://backend.omnishoesbd.com/api/v1/sub-categories/single/${subCategory}`
       );
       setCategory(data.parentCat._id);
     };

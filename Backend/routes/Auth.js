@@ -1,5 +1,5 @@
-import { Router } from "express";
-import {
+const express = require("express");
+const {
   changePassword,
   deleteUser,
   loginUser,
@@ -7,10 +7,10 @@ import {
   sendOTPMail,
   updateUser,
   verifyOTP,
-} from "../controllers/Auth.js";
-import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
+} = require("../controllers/Auth.js");
+const { isAdmin, requireSignIn } = require("../middlewares/Auth.js");
 
-const router = Router();
+const router = express.Router();
 
 router.post("/register", registerUser);
 
@@ -42,4 +42,4 @@ router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

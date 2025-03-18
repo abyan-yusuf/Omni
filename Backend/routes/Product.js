@@ -1,5 +1,5 @@
-import { Router } from "express";
-import {
+const express = require("express");
+const {
   createProduct,
   deleteProduct,
   getAllProducts,
@@ -13,24 +13,35 @@ import {
   getProductsBySubCategory,
   getSimilarProducts,
   updateProduct,
-} from "../controllers/Product.js";
-import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
-import ExpressFormidable from "express-formidable";
-import { get } from "https";
+} = require("../controllers/Product.js");
+const { isAdmin, requireSignIn } = require("../middlewares/Auth.js");
+const ExpressFormidable = require("express-formidable");
 
-const router = Router();
+const router = express.Router();
 
-router.post("/create", requireSignIn, isAdmin, ExpressFormidable(), createProduct);
+router.post(
+  "/create",
+  requireSignIn,
+  isAdmin,
+  ExpressFormidable(),
+  createProduct
+);
 
-router.put("/update/:id", requireSignIn, isAdmin,ExpressFormidable() , updateProduct);
+router.put(
+  "/update/:id",
+  requireSignIn,
+  isAdmin,
+  ExpressFormidable(),
+  updateProduct
+);
 
 router.get("/all", getAllProducts);
 
 router.delete("/delete/:id", requireSignIn, isAdmin, deleteProduct);
 
-router.get("/image/:id", getProductImage)
+router.get("/image/:id", getProductImage);
 
-router.get("/image/details/:id", getProductDetailsImage)
+router.get("/image/details/:id", getProductDetailsImage);
 
 router.get("/single/:id", getProductById);
 
@@ -46,4 +57,4 @@ router.get("/sub-category/:subcatid", getProductsBySubCategory);
 
 router.get("/similar/:id", getSimilarProducts);
 
-export default router;
+module.exports = router;

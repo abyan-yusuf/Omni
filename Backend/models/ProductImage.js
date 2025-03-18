@@ -1,4 +1,5 @@
-import { model, Schema, ObjectId } from "mongoose";
+const mongoose = require("mongoose");
+const { model, Schema, ObjectId } = mongoose;
 
 const pISchema = new Schema({
   product_color: {
@@ -12,4 +13,4 @@ const pISchema = new Schema({
   default: Boolean,
 });
 
-export default model("product_Image", pISchema);
+module.exports = model("product_Image", pISchema);

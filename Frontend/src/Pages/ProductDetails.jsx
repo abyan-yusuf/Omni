@@ -22,7 +22,7 @@ const ProductDetails = () => {
   const getProduct = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-1-men7.onrender.com/api/v1/products/single/${id}`
+        `https://backend.omnishoesbd.com/api/v1/products/single/${id}`
       );
       setProduct(data);
     } catch (error) {
@@ -45,7 +45,7 @@ const ProductDetails = () => {
   const getRelatedProducts = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-1-men7.onrender.com/api/v1/products/similar/${product._id}`
+        `https://backend.omnishoesbd.com/api/v1/products/similar/${product._id}`
       );
       setRelatedProducts(data);
       console.log(data);
@@ -90,7 +90,7 @@ const ProductDetails = () => {
             <div className="basis-1/2">
               {" "}
               <ProductImageZoom
-                imageSrc={`https://omni-1-men7.onrender.com/api/v1/products/image/details/${product?._id}`}
+                imageSrc={`https://backend.omnishoesbd.com/api/v1/products/image/details/${product?._id}`}
               />
             </div>
             <div className="basis-1/2">

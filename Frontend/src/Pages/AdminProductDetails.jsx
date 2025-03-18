@@ -28,7 +28,7 @@ const AdminProductDetails = () => {
   const getProduct = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-1-men7.onrender.com/api/v1/products/single/${id}`
+        `https://backend.omnishoesbd.com/api/v1/products/single/${id}`
       );
       setName(data.name);
       setCode(data.code);
@@ -59,7 +59,7 @@ const AdminProductDetails = () => {
         return;
       }
       const { data } = await axios.delete(
-        `https://omni-1-men7.onrender.com/api/v1/products/delete/${id}`,
+        `https://backend.omnishoesbd.com/api/v1/products/delete/${id}`,
         {
           headers: { Authorization: auth?.token },
         }
@@ -92,7 +92,7 @@ const AdminProductDetails = () => {
       productInfo.append("featured", featured);
       productInfo.append("bestSeller", bestSeller);
       const { data } = await axios.put(
-        `https://omni-1-men7.onrender.com/api/v1/products/update/${id}`,
+        `https://backend.omnishoesbd.com/api/v1/products/update/${id}`,
         productInfo,
         {
           headers: {
@@ -112,7 +112,7 @@ const AdminProductDetails = () => {
   const getSizes = async () => {
     if (product.sizes) {
       const { data } = await axios.get(
-        "https://omni-1-men7.onrender.com/api/v1/sizes/all-sizes"
+        "https://backend.omnishoesbd.com/api/v1/sizes/all-sizes"
       );
 
       setSizes(

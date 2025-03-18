@@ -1,7 +1,7 @@
-import JWT from "jsonwebtoken";
-import Auth from "../models/Auth.js";
+const JWT = require("jsonwebtoken");
+const Auth = require("../models/Auth");
 
-export const requireSignIn = async (req, res, next) => {
+exports.requireSignIn = async (req, res, next) => {
   try {
     const decode = JWT.verify(
       req.headers.authorization,
@@ -15,7 +15,7 @@ export const requireSignIn = async (req, res, next) => {
   }
 };
 
-export const isAdmin = async (req, res, next) => {
+exports.isAdmin = async (req, res, next) => {
   try {
     const user = await Auth.findById(req.user._id);
     if (!user.admin) {

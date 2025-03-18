@@ -1,11 +1,12 @@
-import { model, Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
 
 const sizeSchema = new Schema({
-    size: {
-        type: Number,
-        required: true,
-        unique: true
-    }
-})
+  size: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+});
 
-export default model("size", sizeSchema)
+module.exports = model("size", sizeSchema);

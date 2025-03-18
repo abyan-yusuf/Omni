@@ -15,7 +15,7 @@ const SubCategoryProducts = () => {
   const getSubCategory = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-1-men7.onrender.com/api/v1/sub-categories/single/${sid}`
+        `https://backend.omnishoesbd.com/api/v1/sub-categories/single/${sid}`
       );
       setSubCategory(data);
     } catch (error) {
@@ -26,7 +26,7 @@ const SubCategoryProducts = () => {
   const getProducts = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-1-men7.onrender.com/api/v1/products/sub-category/${sid}`
+        `https://backend.omnishoesbd.com/api/v1/products/sub-category/${sid}`
       );
       setProducts(data);
     } catch (error) {

@@ -1,6 +1,6 @@
-import Color from "../models/Color.js";
+const Color = require("../models/Color.js");
 
-export const createColor = async (req, res) => {
+exports.createColor = async (req, res) => {
   try {
     const { name } = req.body;
     if (!name) {
@@ -21,7 +21,7 @@ export const createColor = async (req, res) => {
   }
 };
 
-export const getAllColors = async (req, res) => {
+exports.getAllColors = async (req, res) => {
   try {
     return res.status(200).json(await Color.find({}));
   } catch (error) {
@@ -30,7 +30,7 @@ export const getAllColors = async (req, res) => {
   }
 };
 
-export const getColorById = async (req, res) => {
+exports.getColorById = async (req, res) => {
   try {
     return res.status(200).json(await Color.findById(req.params.cid));
   } catch (error) {
@@ -39,16 +39,16 @@ export const getColorById = async (req, res) => {
   }
 };
 
-export const updateColor = async (req, res) => {
+exports.updateColor = async (req, res) => {
   try {
     const { cid } = req.params;
-    const { name } = req.body
+    const { name } = req.body;
     if (!name) {
       return res.status(404).send({ message: "Please enter a color" });
     }
     const updatedColor = await Color.findByIdAndUpdate(
       cid,
-      {name},
+      { name },
       { new: true }
     );
     return res
@@ -60,7 +60,7 @@ export const updateColor = async (req, res) => {
   }
 };
 
-export const deleteColor = async (req, res) => {
+exports.deleteColor = async (req, res) => {
   try {
     const { cid } = req.params;
     const deleteColor = await Color.findByIdAndDelete(cid);

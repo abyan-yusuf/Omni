@@ -33,7 +33,7 @@ const CategoryForm = ({
         src={
           (image && URL.createObjectURL(image)) ||
           (id &&
-            `https://omni-1-men7.onrender.com/api/v1/categories/image/${id}`)
+            `https://backend.omnishoesbd.com/api/v1/categories/image/${id}`)
         }
         className="h-auto w-52"
       />

@@ -1,14 +1,14 @@
-import { Router } from "express";
-import {
+const express = require("express");
+const {
   getAllSizes,
   getSizeById,
   updateSize,
   createSize,
   deleteSize,
-} from "../controllers/Size.js";
-import { isAdmin, requireSignIn } from "../middlewares/Auth.js";
+} = require("../controllers/Size.js");
+const { isAdmin, requireSignIn } = require("../middlewares/Auth.js");
 
-const router = Router();
+const router = express.Router();
 
 router.get("/all-sizes", getAllSizes);
 
@@ -20,4 +20,4 @@ router.post("/create", requireSignIn, isAdmin, createSize);
 
 router.delete("/delete/:sid", requireSignIn, isAdmin, deleteSize);
 
-export default router;
+module.exports = router;

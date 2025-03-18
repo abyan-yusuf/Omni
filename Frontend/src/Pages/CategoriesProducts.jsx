@@ -18,7 +18,7 @@ const CategoriesProducts = () => {
   const getProducts = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-1-men7.onrender.com/api/v1/products/category/${cid}`
+        `https://backend.omnishoesbd.com/api/v1/products/category/${cid}`
       );
       setProducts(data);
     } catch (error) {
@@ -29,7 +29,7 @@ const CategoriesProducts = () => {
   const getSubCategories = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-1-men7.onrender.com/api/v1/sub-categories/all/${cid}`
+        `https://backend.omnishoesbd.com/api/v1/sub-categories/all/${cid}`
       );
       setSubCategories(data);
     } catch (error) {
@@ -40,7 +40,7 @@ const CategoriesProducts = () => {
   const getCategory = async () => {
     try {
       const { data } = await axios.get(
-        `https://omni-1-men7.onrender.com/api/v1/categories/single/${cid}`
+        `https://backend.omnishoesbd.com/api/v1/categories/single/${cid}`
       );
       setCategory(data);
     } catch (error) {
@@ -230,7 +230,7 @@ const CategoriesProducts = () => {
                     className="flex space-x-3 items-center"
                   >
                     <img
-                      src={`https://omni-1-men7.onrender.com/api/v1/sub-categories/image/${subCategory._id}`}
+                      src={`https://backend.omnishoesbd.com/api/v1/sub-categories/image/${subCategory._id}`}
                       className="h-16 w-16 rounded-full"
                     />
                     <div>

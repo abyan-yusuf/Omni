@@ -1,16 +1,17 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import categoryRouter from "./routes/Category.js";
-import subCategoryRouter from "./routes/SubCategory.js";
-import colorRouter from "./routes/Color.js";
-import sizeRouter from "./routes/Size.js";
-import authRouter from "./routes/Auth.js";
-import showroomRouter from "./routes/Showroom.js";
-import slideRouter from "./routes/Slides.js";
-import productRouter from "./routes/Product.js";
-import colors from "colors";
-import connectDB from "./config/db.js";
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const categoryRouter = require("./routes/Category.js");
+const subCategoryRouter = require("./routes/SubCategory.js");
+const colorRouter = require("./routes/Color.js");
+const sizeRouter = require("./routes/Size.js");
+const authRouter = require("./routes/Auth.js");
+const showroomRouter = require("./routes/Showroom.js");
+const slideRouter = require("./routes/Slides.js");
+const productRouter = require("./routes/Product.js");
+const directorRouter = require("./routes/Directors.js");
+const colors = require("colors");
+const connectDB = require("./config/db.js");
 
 dotenv.config();
 
@@ -28,6 +29,8 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/slides", slideRouter);
 app.use("/api/v1/showrooms", showroomRouter);
 app.use("/api/v1/products", productRouter);
+app.use("/api/v1/directors", directorRouter);
+
 
 app.get("/", (req, res) => {
   res.send({ message: "Welcome to omni db!" });

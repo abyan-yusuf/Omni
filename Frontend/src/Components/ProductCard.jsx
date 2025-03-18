@@ -9,7 +9,7 @@ const ProductCard = ({ name, price, discount, id, admin, color, sizes }) => {
     >
       <figure className="h-[225px] mb-[14px]">
         <img
-          src={`https://omni-1-men7.onrender.com/api/v1/products/image/${id}`}
+          src={`https://backend.omnishoesbd.com/api/v1/products/image/${id}`}
           alt="Shoes"
           className="h-auto w-full px-2"
         />

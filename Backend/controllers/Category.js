@@ -1,8 +1,8 @@
-import Category from "../models/Category.js";
-import SubCategory from "../models/SubCategory.js"
-import fs from "fs"
+const Category = require("../models/Category.js");
+const SubCategory = require("../models/SubCategory.js");
+const fs = require("fs");
 
-export const createCategory = async (req, res) => {
+exports.createCategory = async (req, res) => {
   try {
     const { name } = req.fields;
     const { image } = req.files;
@@ -28,23 +28,23 @@ export const createCategory = async (req, res) => {
   }
 };
 
-export const getAllCategories = async (req, res) => {
+exports.getAllCategories = async (req, res) => {
   try {
     const allCategories = await Category.find({}).select("-image");
-    res.status(200).json( allCategories );
+    res.status(200).json(allCategories);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
   }
-}
+};
 
-export const getCategoryById = async (req, res) => {
+exports.getCategoryById = async (req, res) => {
   try {
     const { catid } = req.params;
     const singleCategory = await Category.findById(catid).select("-image");
     if (!singleCategory) {
       return res.status(500).send({ message: "Category not found" });
-     }
+    }
     res.status(200).json(singleCategory);
   } catch (error) {
     console.error(error);
@@ -52,7 +52,7 @@ export const getCategoryById = async (req, res) => {
   }
 };
 
-export const updateCategory = async (req, res) => {
+exports.updateCategory = async (req, res) => {
   try {
     const { catid } = req.params;
     const { name } = req.fields;
@@ -63,12 +63,16 @@ export const updateCategory = async (req, res) => {
     const existingCategory = await Category.findOne({ name });
     const updatedCategory = await Category.findByIdAndUpdate(
       catid,
-      { name: name?name:existingCategory.name },
+      { name: name ? name : existingCategory.name },
       { new: true }
     );
     if (image) {
-      updatedCategory.image.data = image? fs.readFileSync(image.path):existingCategory.image.data;
-      updatedCategory.image.contentType = image?image.type:existingCategory.image.contentType;
+      updatedCategory.image.data = image
+        ? fs.readFileSync(image.path)
+        : existingCategory.image.data;
+      updatedCategory.image.contentType = image
+        ? image.type
+        : existingCategory.image.contentType;
     }
     await updatedCategory.save();
     return res
@@ -80,19 +84,21 @@ export const updateCategory = async (req, res) => {
   }
 };
 
-export const deleteCategory = async (req, res) => {
+exports.deleteCategory = async (req, res) => {
   try {
     const { catid } = req.params;
-    const deleteCategory = await Category.findByIdAndDelete(catid)
-    await SubCategory.deleteMany({ parentCat: catid })
-    res.status(200).send({message: "Category deleted", category: deleteCategory})
+    const deleteCategory = await Category.findByIdAndDelete(catid);
+    await SubCategory.deleteMany({ parentCat: catid });
+    res
+      .status(200)
+      .send({ message: "Category deleted", category: deleteCategory });
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
   }
 };
 
-export const getImageById = async (req, res) => {
+exports.getImageById = async (req, res) => {
   try {
     const { catid } = req.params;
     const singleCategory = await Category.findById(catid).select("image");
@@ -105,4 +111,4 @@ export const getImageById = async (req, res) => {
     console.error(error);
     res.status(500).send(error);
   }
-}
+};
