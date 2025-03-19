@@ -3,7 +3,8 @@ import { Helmet } from "react-helmet";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 
-const Layout = ({ children, title, desc, keywords, author, className }) => {
+const Layout = ({ children, title, desc, keywords, author, classname }) => {
+  window.scrollBy(0, 0);
   return (
     <>
       <Helmet>
@@ -15,7 +16,9 @@ const Layout = ({ children, title, desc, keywords, author, className }) => {
       <header>
         <Navbar />
       </header>
-      <main className={"min-h-screen bg-[#fdf6f0]" + className}>{children}</main>
+      <main className={"min-h-screen bg-[#fdf6f0] " + classname}>
+        {children}
+      </main>
       <footer>
         <Footer />
       </footer>

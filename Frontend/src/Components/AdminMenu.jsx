@@ -123,7 +123,7 @@ const AdminMenu = () => {
               ].join(" ")
             }
           >
-            BOD
+            Directors
           </NavLink>
         </li>
 

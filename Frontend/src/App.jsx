@@ -23,6 +23,7 @@ import ProductDetails from "./Pages/ProductDetails";
 import CategoriesProducts from "./Pages/CategoriesProducts";
 import SubCategoryProducts from "./Pages/SubCategoryProducts";
 import AdminDirectors from "./Pages/AdminDirectors";
+import BOD from "./Pages/BOD";
 
 const App = () => {
   return (
@@ -48,7 +49,7 @@ const App = () => {
           />{" "}
           <Route path="directors" element={<AdminDirectors />} />
         </Route>
-
+        <Route path="/bod" element={<BOD/>} />
         <Route path="/showrooms" element={<Showrooms />} />
         <Route path="/showrooms/details/:id" element={<ShowroomDetails />} />
         <Route path="/products/details/:id" element={<ProductDetails />} />

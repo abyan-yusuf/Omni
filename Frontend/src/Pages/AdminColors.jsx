@@ -93,7 +93,6 @@ const AdminColors = () => {
       toast.error(error?.response?.data?.message);
     }
   };
-
   return (
     <Layout>
       <div className="flex">

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="h-[65vh] grid grid-cols-4 space-x-20 font-[forum] bg-footer">
+    <div className="h-[65vh] grid grid-cols-4 space-x-20 font-[forum] bg-footer border-t-2">
       <div className="">
         <h1
           className="font-['Roboto'] font-extrabold italic bg-white text-9xl text-red-600 h-[65vh] text-center ml-20"
